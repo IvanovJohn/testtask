@@ -23,6 +23,7 @@
             this.queryDispatcher = queryDispatcher;
         }
 
+        [HttpGet]
         [Route("")]
         public async Task<ActionResult<IEnumerable<TaskViewModel>>> GetTasks()
         {
