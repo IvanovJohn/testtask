@@ -8,7 +8,7 @@
 
     using Pipelines.Api.Core;
 
-    [Route("api/[controller]")]
+    [Route("api/Tasks")]
     [ApiController]
     public class TasksController : ControllerBase
     {
@@ -23,6 +23,7 @@
             this.queryDispatcher = queryDispatcher;
         }
 
+        [Route("")]
         public async Task<ActionResult<IEnumerable<TaskViewModel>>> GetTasks()
         {
             var tasks = await this.queryDispatcher.Ask<TasksQuery, IEnumerable<TaskViewModel>>(new TasksQuery());

@@ -1,0 +1,20 @@
+version: '3.4'
+
+services:
+  pipelines.api:
+    image: ${DOCKER_REGISTRY-}pipelinesapi
+    build:
+      context: .
+      dockerfile: Pipelines.Api/Dockerfile
+    depends_on: 
+        - mongo
+    environment:
+      mongoConnectionString: "mongodb://mongo:27017"
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+     # todo: remove secrets from compose
+     MONGO_INITDB_ROOT_USERNAME: root
+     MONGO_INITDB_ROOT_PASSWORD: example
