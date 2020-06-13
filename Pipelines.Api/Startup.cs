@@ -1,11 +1,18 @@
 namespace Pipelines.Api
 {
+    using System.Collections.Generic;
+
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.Options;
     using Microsoft.OpenApi.Models;
+
+    using Pipelines.Api.Core;
+    using Pipelines.Api.Settings;
+    using Pipelines.Api.Tasks;
 
     public class Startup
     {
@@ -24,6 +31,16 @@ namespace Pipelines.Api
                 {
                     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Pipelines API", Version = "v1" });
                 });
+
+            services.Configure<MongoDbSettings>(this.Configuration.GetSection(nameof(MongoDbSettings)));
+
+            services.AddSingleton<IMongoDbSettings>(sp =>
+                sp.GetRequiredService<IOptions<MongoDbSettings>>().Value);
+
+            services.AddScoped<IQueryDispatcher, QueryDispatcher>();
+
+            // TODO: register by convention
+            services.AddScoped<IQueryHandler<TasksQuery, IEnumerable<TaskViewModel>>, TasksQueryHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

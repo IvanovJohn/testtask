@@ -8,13 +8,14 @@ services:
       dockerfile: Pipelines.Api/Dockerfile
     depends_on: 
         - mongo
-    environment:
-      mongoConnectionString: "mongodb://mongo:27017"
+    environment:      
+      "MongoDbSettings__ConnectionString": "mongodb://username:password@mongo:27017"
+      "MongoDbSettings__DatabaseName": "Pipelines"
 
   mongo:
     image: mongo
     restart: always
     environment:
      # todo: remove secrets from compose
-     MONGO_INITDB_ROOT_USERNAME: root
-     MONGO_INITDB_ROOT_PASSWORD: example
+     MONGO_INITDB_ROOT_USERNAME: username
+     MONGO_INITDB_ROOT_PASSWORD: password

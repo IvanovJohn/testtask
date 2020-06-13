@@ -1,13 +1,12 @@
 ﻿namespace Pipelines.Api.Tasks
 {
-    /// <summary>
-    /// ViewModel is used to view information about the task.
-    /// </summary>
-    public class TaskViewModel
+    using MongoDB.Bson;
+    using MongoDB.Bson.Serialization.Attributes;
+
+    internal class TaskDbEntity
     {
-        /// <summary>
-        /// Gets or sets the Id of the entity.
-        /// </summary>
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
         /// <summary>
