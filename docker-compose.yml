@@ -1,7 +1,7 @@
 version: '3.4'
 
 services:
-  pipelines.api:
+  back:
     image: ${DOCKER_REGISTRY-}pipelinesapi
     build:
       context: .
@@ -11,6 +11,17 @@ services:
     environment:      
       "MongoDbSettings__ConnectionString": "mongodb://username:password@mongo:27017"
       "MongoDbSettings__DatabaseName": "Pipelines"
+
+  front:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    depends_on: 
+      - back
+    environment:  
+      "API_URL": "http://back"
+    ports:
+      - "8082:80"
 
   migrations:
     image: coldze/mongol
@@ -44,5 +55,3 @@ services:
           - ME_CONFIG_BASICAUTH_PASSWORD=password
       depends_on:
           - mongo
-      ports:
-        - "8081:8081"
