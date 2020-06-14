@@ -1,0 +1,10 @@
+{
+  "connection": "mongodb://username:password@mongo:27017",
+  "dbname": "Pipelines",
+  "migrations": [
+    {
+      "include": "20200613_00001/changelog.json",
+      "relativeToChangelogFile": true
+    }    
+  ]
+}

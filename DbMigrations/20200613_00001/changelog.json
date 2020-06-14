@@ -1,0 +1,8 @@
+{
+  "id": "20200613_00001",
+  "changes": [
+    {
+      "migration": "00001_initial_migration.json"
+    }
+  ]
+}

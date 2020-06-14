@@ -1,0 +1,52 @@
+{
+  "cmds": [
+    {
+      "create": "Users",
+      "validator": {
+        "$jsonSchema": {
+          "bsonType": "object",
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "name": {
+              "bsonType": "string",
+              "description": "must be a string and is required"
+            }
+          }
+        }
+      }
+    },
+    {
+      "insert": "Users",
+      "documents":[
+        {
+          "name": "User 1"
+        },
+        {
+          "name": "User 2"
+        },
+        {
+          "name": "User 3"
+        }
+      ]
+    },
+    {
+      "create": "Tasks",
+      "validator": {
+        "$jsonSchema": {
+          "bsonType": "object",
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "name": {
+              "bsonType": "string",
+              "description": "must be a string and is required"
+            }
+          }
+        }
+      }
+    }
+  ]
+}
