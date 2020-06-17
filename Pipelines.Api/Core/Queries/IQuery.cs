@@ -1,6 +1,9 @@
 ﻿namespace Pipelines.Api.Core.Queries
 {
-    public interface IQuery<TResult>
+    using System.Threading.Tasks;
+
+    public interface IQuery<in TCriterion, TResult> where TCriterion : ICriterion
     {
+        Task<TResult> Ask(TCriterion query);
     }
 }

@@ -5,15 +5,15 @@
     /// <summary>
     /// Exception is used when QueryHandler is not found.
     /// </summary>
-    public class QueryHandlerNotFoundException : Exception
+    public class QueryNotFoundException : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="QueryHandlerNotFoundException"/> class.
+        /// Initializes a new instance of the <see cref="QueryNotFoundException"/> class.
         /// </summary>
         /// <param name="type">
         /// The type.
         /// </param>
-        public QueryHandlerNotFoundException(Type type)
+        public QueryNotFoundException(Type type)
         {
         }
     }

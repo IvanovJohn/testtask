@@ -39,7 +39,7 @@
         [Route("")]
         public async Task<ActionResult<IEnumerable<TaskViewModel>>> GetTasks()
         {
-            var tasks = await this.queryDispatcher.Ask<TasksQuery, IEnumerable<TaskViewModel>>(new TasksQuery());
+            var tasks = await this.queryDispatcher.Ask<TasksCriterion, IEnumerable<TaskViewModel>>(new TasksCriterion());
             return tasks.ToList();
         }
 

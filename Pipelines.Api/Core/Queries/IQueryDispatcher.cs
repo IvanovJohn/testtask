@@ -5,8 +5,8 @@
 
     public interface IQueryDispatcher
     {
-        Task<TResult> Ask<TQuery, TResult>(TQuery query)
-            where TQuery : IQuery<TResult>;
+        Task<TResult> Ask<TQuery, TResult>(TQuery criterion)
+            where TQuery : ICriterion;
     }
 
     internal class QueryDispatcher : IQueryDispatcher
@@ -18,22 +18,22 @@
             this.serviceProvider = serviceProvider;
         }
 
-        public async Task<TResult> Ask<TQuery, TResult>(TQuery query)
-            where TQuery : IQuery<TResult>
+        public async Task<TResult> Ask<TCriterion, TResult>(TCriterion criterion)
+            where TCriterion : ICriterion
         {
+            if (criterion == null)
+            {
+                throw new ArgumentNullException(nameof(criterion));
+            }
+
+            var query = (IQuery<TCriterion, TResult>)this.serviceProvider.GetService(typeof(IQuery<TCriterion, TResult>));
+
             if (query == null)
             {
-                throw new ArgumentNullException(nameof(query));
+                throw new QueryNotFoundException(typeof(IQuery<TCriterion, TResult>));
             }
 
-            var handler = (IQueryHandler<TQuery, TResult>)this.serviceProvider.GetService(typeof(IQueryHandler<TQuery, TResult>));
-
-            if (handler == null)
-            {
-                throw new QueryHandlerNotFoundException(typeof(IQuery<TResult>));
-            }
-
-            return await handler.Ask(query);
+            return await query.Ask(criterion);
         }
     }
 }

@@ -58,7 +58,7 @@ namespace Pipelines.Api
             services.AddScoped<ICommandDispatcher, CommandDispatcher>();
 
             // TODO: register by convention
-            services.AddScoped<IQueryHandler<TasksQuery, IEnumerable<TaskViewModel>>, TasksQueryHandler>();
+            services.AddScoped<IQuery<TasksCriterion, IEnumerable<TaskViewModel>>, TasksQuery>();
             services.AddScoped<ICommand<CreateTaskCommandContext>, CreateTaskCommand>();
         }
 

@@ -4,14 +4,14 @@
         <name>Pipelines.Api</name>
     </assembly>
     <members>
-        <member name="T:Pipelines.Api.Core.Queries.QueryHandlerNotFoundException">
+        <member name="T:Pipelines.Api.Core.Queries.QueryNotFoundException">
             <summary>
             Exception is used when QueryHandler is not found.
             </summary>
         </member>
-        <member name="M:Pipelines.Api.Core.Queries.QueryHandlerNotFoundException.#ctor(System.Type)">
+        <member name="M:Pipelines.Api.Core.Queries.QueryNotFoundException.#ctor(System.Type)">
             <summary>
-            Initializes a new instance of the <see cref="T:Pipelines.Api.Core.Queries.QueryHandlerNotFoundException"/> class.
+            Initializes a new instance of the <see cref="T:Pipelines.Api.Core.Queries.QueryNotFoundException"/> class.
             </summary>
             <param name="type">
             The type.
