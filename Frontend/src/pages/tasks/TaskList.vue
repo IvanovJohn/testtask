@@ -17,6 +17,21 @@
       <template v-slot:cell(averageTime)="averageTime">        
         {{averageTime.value ? averageTime.value : '-'}}
       </template>
+      <template v-slot:cell(actions)="data">                     
+        <b-button size="sm" variant="outline" class="m-0 mr-2 p-0" @click="editTask(data.item.id)" >
+          <b-icon icon="pencil-square" aria-hidden="true" ></b-icon>
+        </b-button>
+        <b-button size="sm" variant="outline" class="m-0 p-0" @click="deleteTask(data.item.id)" >
+          <b-icon icon="trash-fill" aria-hidden="true" ></b-icon>
+        </b-button>         
+      </template>
+      <template v-slot:table-colgroup="scope">
+        <col
+          v-for="field in scope.fields"
+          :key="field.key"
+          :style="{ width: field.key === 'actions' ? '60px' : '' }"
+        >
+      </template>
     </b-table>
   
 </template>
@@ -37,6 +52,10 @@
           {
             key: 'averageTime',
             label: 'Average time, ms',
+          },
+          {
+            key: 'actions',
+            label: ''
           }         
         ]
       }
@@ -51,6 +70,12 @@
       },
       refresh(){
         this.$refs.table.refresh();
+      },
+      deleteTask(id){
+        alert(id)
+      },
+      editTask(id){
+        alert(id)
       }
     }
   }
