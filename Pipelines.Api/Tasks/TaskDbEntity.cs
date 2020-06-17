@@ -12,11 +12,13 @@
         /// <summary>
         /// Gets or sets the Name of the task.
         /// </summary>
+        [BsonElement("name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the ​AverageTime ​it takes to run.
         /// </summary>
-        public long AverageTime { get; set; }
+        [BsonElement("averageTime")]
+        public long? AverageTime { get; set; }
     }
 }

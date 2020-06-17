@@ -18,6 +18,6 @@
         /// <summary>
         /// Gets or sets the ​AverageTime ​it takes to run.
         /// </summary>
-        public long AverageTime { get; set; }
+        public long? AverageTime { get; set; }
     }
 }

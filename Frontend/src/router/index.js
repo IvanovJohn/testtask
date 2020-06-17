@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Pipelines from '../views/Pipelines.vue'
+import Pipelines from '../pages/pipelines/PipelinesPage.vue'
+import Tasks from '../pages/tasks/TasksPage.vue'
 
 Vue.use(VueRouter)
 
@@ -13,7 +14,7 @@ Vue.use(VueRouter)
   {
     path: '/tasks',
     name: 'Tasks',   
-    component: () => import(/* webpackChunkName: "tasks" */ '../views/Tasks.vue')
+    component: Tasks
   }
 ]
 

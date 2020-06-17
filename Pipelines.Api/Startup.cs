@@ -25,6 +25,18 @@ namespace Pipelines.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+                {
+                    options.AddPolicy(
+                        "AllowAll",
+                        builder =>
+                            {
+                                builder
+                                    .AllowAnyOrigin()
+                                    .AllowAnyMethod()
+                                    .AllowAnyHeader();
+                            });
+                });
             services.AddControllers();
 
             services.AddSwaggerGen(c =>
@@ -51,8 +63,7 @@ namespace Pipelines.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
-
+            app.UseCors("AllowAll");
             app.UseRouting();
 
             app.UseAuthorization();

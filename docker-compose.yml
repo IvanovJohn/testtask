@@ -19,7 +19,7 @@ services:
     depends_on: 
       - back
     environment:  
-      "API_URL": "http://back"
+      "API_URL": "http://back/api"
     ports:
       - "8082:80"
 
@@ -55,3 +55,5 @@ services:
           - ME_CONFIG_BASICAUTH_PASSWORD=password
       depends_on:
           - mongo
+      ports:
+      - "8083:8081"

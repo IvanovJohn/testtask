@@ -27,15 +27,16 @@ export default {
 }
 </script>
 
-<style >
+<style scoped>
 .sidebar {
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
-  z-index: 100; /* Behind the navbar */ 
+  z-index: 100;
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
   text-align:left;
+  padding-top: 40px;
 }
 
 @media (max-width: 767.98px) {
