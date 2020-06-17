@@ -74,7 +74,8 @@
                 tasksRepository.add(this.form).then(() => {
                     // Hide the modal manually
                     this.$nextTick(() => {                    
-                        this.$bvModal.hide('modalTaskCreation')
+                        this.$bvModal.hide('modalTaskCreation');
+                        this.$emit('onTaskCreated');
                     });
                 });
             },

@@ -2,6 +2,7 @@
   
     <b-table
       id="tasks-table"
+      ref="table"
       :busy.sync="isBusy"
       :items="itemsProvider" 
       :fields="fields" 
@@ -47,6 +48,9 @@
           const items = data.data;
           return(items);
         }).catch(() => [])
+      },
+      refresh(){
+        this.$refs.table.refresh();
       }
     }
   }

@@ -3,12 +3,12 @@
     <h1>Tasks</h1>
     <div class="row">
       <div class="col mb-2 text-right">
-        <task-create />
+        <task-create v-on:onTaskCreated="refreshList"/>
       </div>
     </div>
     <div class="row">
       <div class="col">
-        <task-list />
+        <task-list ref="taskList"/>
       </div>
     </div>
   </div>  
@@ -24,6 +24,11 @@ export default {
   components: {
     TaskList,
     TaskCreate
+  },
+  methods: {
+    refreshList(){
+      this.$refs.taskList.refresh();
+    }
   }
 }
 </script>
