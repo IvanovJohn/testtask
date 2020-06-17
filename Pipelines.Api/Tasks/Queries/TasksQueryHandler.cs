@@ -1,4 +1,4 @@
-﻿namespace Pipelines.Api.Tasks
+﻿namespace Pipelines.Api.Tasks.Queries
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -7,7 +7,9 @@
     using MongoDB.Driver;
 
     using Pipelines.Api.Core;
+    using Pipelines.Api.Core.Queries;
     using Pipelines.Api.Settings;
+    using Pipelines.Api.Tasks.ViewModels;
 
     internal class TasksQueryHandler : IQueryHandler<TasksQuery, IEnumerable<TaskViewModel>>
     {

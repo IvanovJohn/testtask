@@ -6,21 +6,33 @@
 
     using Microsoft.AspNetCore.Mvc;
 
-    using Pipelines.Api.Core;
+    using Pipelines.Api.Core.Commands;
+    using Pipelines.Api.Core.Queries;
+    using Pipelines.Api.Tasks.Commands;
+    using Pipelines.Api.Tasks.Forms;
+    using Pipelines.Api.Tasks.Queries;
+    using Pipelines.Api.Tasks.ViewModels;
 
     [Route("api/Tasks")]
     [ApiController]
     public class TasksController : ControllerBase
     {
         private readonly IQueryDispatcher queryDispatcher;
+        private readonly ICommandDispatcher commandDispatcher;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TasksController"/> class.
         /// </summary>
-        /// <param name="queryDispatcher"><see cref="IQueryDispatcher"/>.</param>
-        public TasksController(IQueryDispatcher queryDispatcher)
+        /// <param name="queryDispatcher">
+        /// <see cref="IQueryDispatcher"/>.
+        /// </param>
+        /// <param name="commandDispatcher">
+        /// <see cref="ICommandDispatcher"/>.
+        /// </param>
+        public TasksController(IQueryDispatcher queryDispatcher, ICommandDispatcher commandDispatcher)
         {
             this.queryDispatcher = queryDispatcher;
+            this.commandDispatcher = commandDispatcher;
         }
 
         [HttpGet]
@@ -29,6 +41,16 @@
         {
             var tasks = await this.queryDispatcher.Ask<TasksQuery, IEnumerable<TaskViewModel>>(new TasksQuery());
             return tasks.ToList();
+        }
+
+        [HttpPost]
+        [Route("")]
+        public async Task Create(CreateTaskForm form)
+        {
+            await this.commandDispatcher.Execute(new CreateTaskCommandContext
+                                                  {
+                                                      Form = form
+                                                  });
         }
     }
 }

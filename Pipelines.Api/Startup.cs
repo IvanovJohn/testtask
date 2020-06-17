@@ -11,8 +11,13 @@ namespace Pipelines.Api
     using Microsoft.OpenApi.Models;
 
     using Pipelines.Api.Core;
+    using Pipelines.Api.Core.Commands;
+    using Pipelines.Api.Core.Queries;
     using Pipelines.Api.Settings;
     using Pipelines.Api.Tasks;
+    using Pipelines.Api.Tasks.Commands;
+    using Pipelines.Api.Tasks.Queries;
+    using Pipelines.Api.Tasks.ViewModels;
 
     public class Startup
     {
@@ -50,9 +55,11 @@ namespace Pipelines.Api
                 sp.GetRequiredService<IOptions<MongoDbSettings>>().Value);
 
             services.AddScoped<IQueryDispatcher, QueryDispatcher>();
+            services.AddScoped<ICommandDispatcher, CommandDispatcher>();
 
             // TODO: register by convention
             services.AddScoped<IQueryHandler<TasksQuery, IEnumerable<TaskViewModel>>, TasksQueryHandler>();
+            services.AddScoped<ICommand<CreateTaskCommandContext>, CreateTaskCommand>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

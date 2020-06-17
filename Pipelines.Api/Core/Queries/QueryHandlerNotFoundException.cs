@@ -1,4 +1,4 @@
-﻿namespace Pipelines.Api.Core
+﻿namespace Pipelines.Api.Core.Queries
 {
     using System;
 

@@ -1,4 +1,4 @@
-﻿namespace Pipelines.Api.Tasks
+﻿namespace Pipelines.Api.Tasks.ViewModels
 {
     /// <summary>
     /// ViewModel is used to view information about the task.

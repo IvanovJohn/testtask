@@ -4,14 +4,14 @@
         <name>Pipelines.Api</name>
     </assembly>
     <members>
-        <member name="T:Pipelines.Api.Core.QueryHandlerNotFoundException">
+        <member name="T:Pipelines.Api.Core.Queries.QueryHandlerNotFoundException">
             <summary>
             Exception is used when QueryHandler is not found.
             </summary>
         </member>
-        <member name="M:Pipelines.Api.Core.QueryHandlerNotFoundException.#ctor(System.Type)">
+        <member name="M:Pipelines.Api.Core.Queries.QueryHandlerNotFoundException.#ctor(System.Type)">
             <summary>
-            Initializes a new instance of the <see cref="T:Pipelines.Api.Core.QueryHandlerNotFoundException"/> class.
+            Initializes a new instance of the <see cref="T:Pipelines.Api.Core.Queries.QueryHandlerNotFoundException"/> class.
             </summary>
             <param name="type">
             The type.
@@ -27,28 +27,33 @@
             Gets or sets the ​AverageTime ​it takes to run.
             </summary>
         </member>
-        <member name="M:Pipelines.Api.Tasks.TasksController.#ctor(Pipelines.Api.Core.IQueryDispatcher)">
+        <member name="M:Pipelines.Api.Tasks.TasksController.#ctor(Pipelines.Api.Core.Queries.IQueryDispatcher,Pipelines.Api.Core.Commands.ICommandDispatcher)">
             <summary>
             Initializes a new instance of the <see cref="T:Pipelines.Api.Tasks.TasksController"/> class.
             </summary>
-            <param name="queryDispatcher"><see cref="T:Pipelines.Api.Core.IQueryDispatcher"/>.</param>
+            <param name="queryDispatcher">
+            <see cref="T:Pipelines.Api.Core.Queries.IQueryDispatcher"/>.
+            </param>
+            <param name="commandDispatcher">
+            <see cref="T:Pipelines.Api.Core.Commands.ICommandDispatcher"/>.
+            </param>
         </member>
-        <member name="T:Pipelines.Api.Tasks.TaskViewModel">
+        <member name="T:Pipelines.Api.Tasks.ViewModels.TaskViewModel">
             <summary>
             ViewModel is used to view information about the task.
             </summary>
         </member>
-        <member name="P:Pipelines.Api.Tasks.TaskViewModel.Id">
+        <member name="P:Pipelines.Api.Tasks.ViewModels.TaskViewModel.Id">
             <summary>
             Gets or sets the Id of the entity.
             </summary>
         </member>
-        <member name="P:Pipelines.Api.Tasks.TaskViewModel.Name">
+        <member name="P:Pipelines.Api.Tasks.ViewModels.TaskViewModel.Name">
             <summary>
             Gets or sets the Name of the task.
             </summary>
         </member>
-        <member name="P:Pipelines.Api.Tasks.TaskViewModel.AverageTime">
+        <member name="P:Pipelines.Api.Tasks.ViewModels.TaskViewModel.AverageTime">
             <summary>
             Gets or sets the ​AverageTime ​it takes to run.
             </summary>
