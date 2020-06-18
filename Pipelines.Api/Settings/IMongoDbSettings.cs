@@ -6,6 +6,8 @@
 
         string DatabaseName { get; }
 
+        string UsersCollectionName { get; }
+
         string TasksCollectionName { get; }
 
         string PipelinesCollectionName { get; }
@@ -16,6 +18,14 @@
         public string ConnectionString { get; set; }
 
         public string DatabaseName { get; set; }
+
+        public string UsersCollectionName
+        {
+            get
+            {
+                return "Users";
+            }
+        }
 
         public string TasksCollectionName
         {

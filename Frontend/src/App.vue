@@ -5,7 +5,8 @@
         
         <ul class="navbar-nav px-3">
           <li class="nav-item text-nowrap">
-            <a class="nav-link" href="#">Sign out</a>
+
+            <userSelector />
           </li>
         </ul>
       </nav>
@@ -24,11 +25,13 @@
 
 <script>
   import Sidebar from '@/components/Sidebar.vue'
+  import UserSelector from '@/components/Users/UserSelector.vue'
 
   export default {
   name: 'App',
   components: {
-    Sidebar
+    Sidebar, 
+    UserSelector
   }
 }
 </script>

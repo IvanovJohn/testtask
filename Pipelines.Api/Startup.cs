@@ -10,14 +10,14 @@ namespace Pipelines.Api
     using Microsoft.Extensions.Options;
     using Microsoft.OpenApi.Models;
 
-    using Pipelines.Api.Core;
     using Pipelines.Api.Core.Commands;
     using Pipelines.Api.Core.Queries;
     using Pipelines.Api.Settings;
-    using Pipelines.Api.Tasks;
     using Pipelines.Api.Tasks.Commands;
     using Pipelines.Api.Tasks.Queries;
     using Pipelines.Api.Tasks.ViewModels;
+    using Pipelines.Api.Users.Queries;
+    using Pipelines.Api.Users.ViewModels;
 
     public class Startup
     {
@@ -60,9 +60,10 @@ namespace Pipelines.Api
             // TODO: register by convention
             services.AddScoped<IQuery<TasksCriterion, IEnumerable<TaskViewModel>>, TasksQuery>();
             services.AddScoped<ICommand<CreateTaskCommandContext>, CreateTaskCommand>();
+
+            services.AddScoped<IQuery<UsersCriterion, IEnumerable<UserViewModel>>, UsersQuery>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
