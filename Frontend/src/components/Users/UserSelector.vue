@@ -1,12 +1,15 @@
 <template>
     <b-form-select v-model="selected" 
      :options="options" 
-      value-field="id"
-      text-field="name"></b-form-select>
+      value-field="name"
+      text-field="name"
+      ref="userSelect"
+      change="onChange"></b-form-select>
 </template>
 
 <script>
 import usersRepository from './usersRepository';
+import authService from './authService';
 
 export default {
     name: 'UserSelector', 
@@ -19,10 +22,18 @@ export default {
       }
     },
     mounted() {
-      usersRepository.list().then((data) => {
-        console.log(data)
+      usersRepository.list().then((data) => {        
         this.options = this.options.concat(data.data)
       });
+    },
+    watch: {    
+      selected: function (newValue) {
+        if(newValue === this.options[0].name){
+          newValue = null;
+        }
+
+        authService.login(newValue, null);
+      }
     }
 }
 </script>

@@ -24,4 +24,11 @@ const router = new VueRouter({
   routes
 })
 
+router.reloadCurrentPage = function(){
+  const to = router.currentRoute;
+  router.replace('/').then(()=>{
+      router.replace(to)
+  });      
+}
+
 export default router

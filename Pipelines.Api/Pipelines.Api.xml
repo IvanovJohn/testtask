@@ -4,6 +4,62 @@
         <name>Pipelines.Api</name>
     </assembly>
     <members>
+        <member name="T:Pipelines.Api.Auth.AuthController">
+            <summary>
+            Authentication controller.
+            </summary>
+        </member>
+        <member name="M:Pipelines.Api.Auth.AuthController.#ctor(Pipelines.Api.Auth.IUserAuthenticationService)">
+            <summary>
+             Initializes a new instance of the <see cref="T:Pipelines.Api.Auth.AuthController"/> class.
+            </summary>
+            <param name="authenticationService"><see cref="T:Pipelines.Api.Auth.IUserAuthenticationService"/>.</param>
+        </member>
+        <member name="M:Pipelines.Api.Auth.AuthController.Authenticate(Pipelines.Api.Auth.AuthenticateForm)">
+            <summary>
+            Authenticate user.
+            </summary>
+            <param name="form"><see cref="T:Pipelines.Api.Auth.AuthenticateForm"/>.</param>
+            <returns><see cref="T:Microsoft.AspNetCore.Mvc.IActionResult"/>.</returns>
+        </member>
+        <member name="T:Pipelines.Api.Auth.AuthenticateForm">
+            <summary>
+            Authenticate model.
+            </summary>
+        </member>
+        <member name="P:Pipelines.Api.Auth.AuthenticateForm.User">
+            <summary>
+            Gets or sets username.
+            </summary>
+        </member>
+        <member name="P:Pipelines.Api.Auth.AuthenticateForm.Password">
+            <summary>
+            Gets or sets password.
+            </summary>
+        </member>
+        <member name="T:Pipelines.Api.Auth.AuthResult">
+            <summary>
+            Auth result.
+            </summary>
+        </member>
+        <member name="P:Pipelines.Api.Auth.AuthResult.Token">
+            <summary>
+            Gets or sets token.
+            </summary>
+        </member>
+        <member name="T:Pipelines.Api.Auth.IUserAuthenticationService">
+            <summary>
+            Authentication service.
+            </summary>
+        </member>
+        <member name="M:Pipelines.Api.Auth.IUserAuthenticationService.Authenticate(System.String,System.String)">
+            <summary>
+            Authenticate user.
+            </summary>
+            <param name="username">User.</param>
+            <param name="password">Password.</param>
+            <returns>Token.</returns>
+        </member>
         <member name="T:Pipelines.Api.Core.Queries.QueryNotFoundException">
             <summary>
             Exception is used when QueryHandler is not found.
@@ -25,6 +81,11 @@
         <member name="P:Pipelines.Api.Tasks.TaskDbEntity.AverageTime">
             <summary>
             Gets or sets the ​AverageTime ​it takes to run.
+            </summary>
+        </member>
+        <member name="P:Pipelines.Api.Tasks.TaskDbEntity.CreatorUserId">
+            <summary>
+            Gets or sets user, who creates this task.
             </summary>
         </member>
         <member name="M:Pipelines.Api.Tasks.TasksController.#ctor(Pipelines.Api.Core.Queries.IQueryDispatcher,Pipelines.Api.Core.Commands.ICommandDispatcher)">

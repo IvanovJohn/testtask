@@ -6,6 +6,7 @@
 
     using Microsoft.AspNetCore.Mvc;
 
+    using Pipelines.Api.Auth;
     using Pipelines.Api.Core.Commands;
     using Pipelines.Api.Core.Queries;
     using Pipelines.Api.Tasks.Commands;
@@ -49,7 +50,8 @@
         {
             await this.commandDispatcher.Execute(new CreateTaskCommandContext
                                                   {
-                                                      Form = form
+                                                      Form = form,
+                                                      CurrentUserId = this.User.GetUserIdFromClaims(),
                                                   });
         }
     }

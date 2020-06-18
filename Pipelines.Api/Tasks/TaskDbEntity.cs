@@ -20,5 +20,11 @@
         /// </summary>
         [BsonElement("averageTime")]
         public long? AverageTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets user, who creates this task.
+        /// </summary>
+        [BsonElement("creatorUserId")]
+        public string CreatorUserId { get; set; }
     }
 }

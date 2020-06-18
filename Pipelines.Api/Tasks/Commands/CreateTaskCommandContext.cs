@@ -6,5 +6,7 @@
     public class CreateTaskCommandContext : ICommandContext
     {
         public CreateTaskForm Form { get; set; }
+
+        public string CurrentUserId { get; set; }
     }
 }
