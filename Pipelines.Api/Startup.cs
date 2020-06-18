@@ -7,7 +7,6 @@ namespace Pipelines.Api
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Options;
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
@@ -15,6 +14,7 @@ namespace Pipelines.Api
     using Pipelines.Api.Auth;
     using Pipelines.Api.Core.Commands;
     using Pipelines.Api.Core.Queries;
+    using Pipelines.Api.ExceptionHandling;
     using Pipelines.Api.Settings;
     using Pipelines.Api.Tasks.Commands;
     using Pipelines.Api.Tasks.Queries;
@@ -46,7 +46,7 @@ namespace Pipelines.Api
                                     .AllowAnyHeader();
                             });
                 });
-            services.AddControllers();
+            services.AddControllers(p => { p.Filters.Add(typeof(ExceptionFilter)); });
 
             services.AddSwaggerGen(c =>
                 {
@@ -85,15 +85,13 @@ namespace Pipelines.Api
                                                               ValidateAudience = false,
                                                           };
                     });
+
             services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            app.UseHsts();
 
             app.UseCors("AllowAll");
             app.UseRouting();

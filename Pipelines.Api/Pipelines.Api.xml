@@ -73,6 +73,190 @@
             The type.
             </param>
         </member>
+        <member name="T:Pipelines.Api.ExceptionHandling.ApiError">
+            <summary>
+            Api error.
+            </summary>
+        </member>
+        <member name="P:Pipelines.Api.ExceptionHandling.ApiError.Code">
+            <summary>
+            Gets or sets api error code.
+            </summary>
+        </member>
+        <member name="P:Pipelines.Api.ExceptionHandling.ApiError.Message">
+            <summary>
+            Gets or sets error message.
+            </summary>
+        </member>
+        <member name="P:Pipelines.Api.ExceptionHandling.ApiError.Description">
+            <summary>
+            Gets or sets error description.
+            </summary>
+        </member>
+        <member name="P:Pipelines.Api.ExceptionHandling.ApiError.DateTime">
+            <summary>
+            Gets or sets server datetime.
+            </summary>
+        </member>
+        <member name="P:Pipelines.Api.ExceptionHandling.ApiError.InnerError">
+            <summary>
+            Gets or sets inner error.
+            </summary>
+        </member>
+        <member name="T:Pipelines.Api.ExceptionHandling.ApiErrorResponse">
+            <summary>
+            Api error.
+            </summary>
+        </member>
+        <member name="P:Pipelines.Api.ExceptionHandling.ApiErrorResponse.RequestId">
+            <summary>
+            Gets or sets request Id.
+            </summary>
+        </member>
+        <member name="P:Pipelines.Api.ExceptionHandling.ApiErrorResponse.Error">
+            <summary>
+            Gets or sets error.
+            </summary>
+        </member>
+        <member name="T:Pipelines.Api.ExceptionHandling.ApiException">
+            <summary>
+            Exception of api.
+            </summary>
+        </member>
+        <member name="M:Pipelines.Api.ExceptionHandling.ApiException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Pipelines.Api.ExceptionHandling.ApiException"/> class.
+            </summary>
+            <param name="message">
+            The message.
+            </param>
+            <param name="innerException">
+            The inner exception.
+            </param>
+        </member>
+        <member name="P:Pipelines.Api.ExceptionHandling.ApiException.HttpStatusCode">
+            <summary>
+            Gets or sets httpStatusCode code.
+            </summary>
+        </member>
+        <member name="P:Pipelines.Api.ExceptionHandling.ApiException.Code">
+            <summary>
+            Gets or sets error code.
+            </summary>
+        </member>
+        <member name="P:Pipelines.Api.ExceptionHandling.ApiException.Description">
+            <summary>
+            Gets or sets description.
+            </summary>
+        </member>
+        <member name="P:Pipelines.Api.ExceptionHandling.ApiException.DateTime">
+            <summary>
+            Gets or sets datetime.
+            </summary>
+        </member>
+        <member name="M:Pipelines.Api.ExceptionHandling.ApiException.Error(System.String,System.Exception)">
+            <summary>
+            Operation Failed. General Error.
+            </summary>
+            <param name="message">
+            The message.
+            </param>
+            <param name="innerException">
+            The inner exception.
+            </param>
+            <returns>
+            The <see cref="T:Pipelines.Api.ExceptionHandling.ApiException"/>.
+            </returns>
+        </member>
+        <member name="M:Pipelines.Api.ExceptionHandling.ApiException.ErrorInvalidInputData(System.String,System.Exception)">
+            <summary>
+            Operation Failed. The input data did not pass validation.
+            </summary>
+            <param name="message">
+            The message.
+            </param>
+            <param name="innerException">
+            The inner exception.
+            </param>
+            <returns>
+            The <see cref="T:Pipelines.Api.ExceptionHandling.ApiException"/>.
+            </returns>
+        </member>
+        <member name="M:Pipelines.Api.ExceptionHandling.ApiException.ErrorAuthentication(System.String,System.Exception)">
+            <summary>
+            Operation Failed. The authentication data is incorrect.
+            </summary>
+            <param name="message">
+            The message.
+            </param>
+            <param name="innerException">
+            The inner exception.
+            </param>
+            <returns>
+            The <see cref="T:Pipelines.Api.ExceptionHandling.ApiException"/>.
+            </returns>
+        </member>
+        <member name="M:Pipelines.Api.ExceptionHandling.ApiException.ErrorAuthorization(System.String,System.Exception)">
+            <summary>
+            Operation Failed. The authorization data is incorrect.
+            </summary>
+            <param name="message">
+            The message.
+            </param>
+            <param name="innerException">
+            The inner exception.
+            </param>
+            <returns>
+            The <see cref="T:Pipelines.Api.ExceptionHandling.ApiException"/>.
+            </returns>
+        </member>
+        <member name="M:Pipelines.Api.ExceptionHandling.ApiException.ErrorItemNotFound(System.String,System.Exception)">
+            <summary>
+            Operation Failed. Item Not Found.
+            </summary>
+            <param name="message">
+            The message.
+            </param>
+            <param name="innerException">
+            The inner exception.
+            </param>
+            <returns>
+            The <see cref="T:Pipelines.Api.ExceptionHandling.ApiException"/>.
+            </returns>
+        </member>
+        <member name="M:Pipelines.Api.ExceptionHandling.ApiException.ErrorDuplicateItem(System.String,System.Exception)">
+            <summary>
+            Operation Failed. Duplicate Item Constraint .
+            </summary>
+            <param name="message">
+            The message.
+            </param>
+            <param name="innerException">
+            The inner exception.
+            </param>
+            <returns>
+            The <see cref="T:Pipelines.Api.ExceptionHandling.ApiException"/>.
+            </returns>
+        </member>
+        <member name="M:Pipelines.Api.ExceptionHandling.ApiException.InternalError(System.String,System.Exception)">
+            <summary>
+            Operation Failed. Internal error.
+            </summary>
+            <param name="message">
+            The message.
+            </param>
+            <param name="innerException">
+            The inner exception.
+            </param>
+            <returns>
+            The <see cref="T:Pipelines.Api.ExceptionHandling.ApiException"/>.
+            </returns>
+        </member>
+        <member name="T:Pipelines.Api.ExceptionHandling.ExceptionFilter">
+            <summary>
+            Api exception handling.
+            </summary>
+        </member>
         <member name="P:Pipelines.Api.Tasks.TaskDbEntity.Name">
             <summary>
             Gets or sets the Name of the task.

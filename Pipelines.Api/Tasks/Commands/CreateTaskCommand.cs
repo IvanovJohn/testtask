@@ -6,8 +6,8 @@
     using MongoDB.Driver;
 
     using Pipelines.Api.Core.Commands;
+    using Pipelines.Api.ExceptionHandling;
     using Pipelines.Api.Settings;
-    using Pipelines.Api.Users;
 
     internal class CreateTaskCommand : ICommand<CreateTaskCommandContext>
     {
@@ -22,7 +22,7 @@
         {
             if (string.IsNullOrEmpty(commandContext.CurrentUserId))
             {
-                throw new ArgumentException("userId");
+                throw ApiException.ErrorAuthentication("You should login before create a task");
             }
 
             var client = new MongoClient(this.mongoDbSettings.ConnectionString);
@@ -33,7 +33,7 @@
                 new TaskDbEntity
                     {
                         Name = commandContext.Form.Name,
-                        CreatorUserId = commandContext.CurrentUserId ,
+                        CreatorUserId = commandContext.CurrentUserId,
                     });
         }
     }

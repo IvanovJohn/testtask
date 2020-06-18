@@ -10,10 +10,10 @@ Vue.use(IconsPlugin)
 
 
 import router from './router'
+import axiosWrapper from './core/axiosWrapper'
 
-
-
-new Vue({
+var vueInstance=new Vue({
   router,
   render: h => h(App)
 }).$mount('#app')
+axiosWrapper.init(vueInstance);
