@@ -76,6 +76,11 @@
                     // Hide the modal manually
                     this.$nextTick(() => {                    
                         this.$bvModal.hide('modalTaskCreation');
+                        this.$bvToast.toast("Task created", {
+                            title: 'Info',           
+                            variant: 'success',
+                            toaster: 'b-toaster-top-center'
+                        });               
                         this.$emit('onTaskCreated');
                     });
                 });
