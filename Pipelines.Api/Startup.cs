@@ -3,6 +3,7 @@ namespace Pipelines.Api
     using System.Collections.Generic;
 
     using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
@@ -16,6 +17,7 @@ namespace Pipelines.Api
     using Pipelines.Api.Core.Queries;
     using Pipelines.Api.ExceptionHandling;
     using Pipelines.Api.Settings;
+    using Pipelines.Api.Tasks;
     using Pipelines.Api.Tasks.Commands;
     using Pipelines.Api.Tasks.Queries;
     using Pipelines.Api.Tasks.ViewModels;
@@ -63,6 +65,7 @@ namespace Pipelines.Api
 
             // TODO: register by convention
             services.AddScoped<IQuery<TasksCriterion, IEnumerable<TaskViewModel>>, TasksQuery>();
+            services.AddScoped<IQuery<TaskByIdCriterion, TaskViewModel>, TaskByIdQuery>();
             services.AddScoped<ICommand<CreateTaskCommandContext>, CreateTaskCommand>();
             services.AddScoped<ICommand<DeleteTaskCommandContext>, DeleteTaskCommand>();
 
@@ -88,6 +91,7 @@ namespace Pipelines.Api
                     });
 
             services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
+            services.AddSingleton<IAuthorizationHandler, TaskAuthorizationHandler>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

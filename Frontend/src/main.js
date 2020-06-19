@@ -4,10 +4,11 @@ import "bootstrap-vue/dist/bootstrap-vue.css"
 import Vue from 'vue'
 import App from './App.vue'
 
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-Vue.use(BootstrapVue)
+import { BootstrapVue, IconsPlugin  } from 'bootstrap-vue'
+Vue.use(BootstrapVue,  {
+  BToast: { autoHideDelay: 3000 } 
+})
 Vue.use(IconsPlugin)
-
 
 import router from './router'
 import axiosWrapper from './core/axiosWrapper'

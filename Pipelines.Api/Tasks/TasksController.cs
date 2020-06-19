@@ -59,7 +59,7 @@
             await this.commandDispatcher.Execute(new CreateTaskCommandContext
                                                   {
                                                       Form = form,
-                                                      CurrentUserId = this.CurrentUserId,
+                                                      CurrentUser = this.User,
                                                   });
         }
 
@@ -70,7 +70,7 @@
             await this.commandDispatcher.Execute(new DeleteTaskCommandContext
                                                      {
                                                          Id = id,
-                                                         CurrentUserId = this.CurrentUserId,
+                                                         CurrentUser = this.User,
                                                      });
         }
     }

@@ -2,6 +2,7 @@
 {
     using System.Threading.Tasks;
 
+    using Pipelines.Api.Auth;
     using Pipelines.Api.ExceptionHandling;
     using Pipelines.Api.Settings;
 
@@ -14,17 +15,16 @@
 
         public override async Task Execute(CreateTaskCommandContext commandContext)
         {
-            // TODO: move to authorizationhandler
-            if (string.IsNullOrEmpty(commandContext.CurrentUserId))
+            if (commandContext.CurrentUser == null || !commandContext.CurrentUser.Identity.IsAuthenticated)
             {
-                throw ApiException.ErrorAuthentication("You should login before create a task");
+                throw ApiException.ErrorAuthorization("You should login before create task");
             }
 
             await this.TasksCollection.InsertOneAsync(
                 new TaskDbEntity
                     {
                         Name = commandContext.Form.Name,
-                        CreatorUserId = commandContext.CurrentUserId,
+                        CreatorUserId = commandContext.CurrentUser.GetUserIdFromClaims(),
                     });
         }
     }

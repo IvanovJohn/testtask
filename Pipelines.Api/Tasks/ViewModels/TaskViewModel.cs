@@ -19,5 +19,10 @@
         /// Gets or sets the ​AverageTime ​it takes to run.
         /// </summary>
         public long? AverageTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets user, who creates this task.
+        /// </summary>
+        public string CreatorUserId { get; set; }
     }
 }
