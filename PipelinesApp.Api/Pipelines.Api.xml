@@ -1,0 +1,323 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PipelinesApp.Api</name>
+    </assembly>
+    <members>
+        <member name="T:PipelinesApp.Api.Auth.AuthController">
+            <summary>
+            Authentication controller.
+            </summary>
+        </member>
+        <member name="M:PipelinesApp.Api.Auth.AuthController.#ctor(PipelinesApp.Api.Auth.IUserAuthenticationService)">
+            <summary>
+             Initializes a new instance of the <see cref="T:PipelinesApp.Api.Auth.AuthController"/> class.
+            </summary>
+            <param name="authenticationService"><see cref="T:PipelinesApp.Api.Auth.IUserAuthenticationService"/>.</param>
+        </member>
+        <member name="M:PipelinesApp.Api.Auth.AuthController.Authenticate(PipelinesApp.Api.Auth.AuthenticateForm)">
+            <summary>
+            Authenticate user.
+            </summary>
+            <param name="form"><see cref="T:PipelinesApp.Api.Auth.AuthenticateForm"/>.</param>
+            <returns><see cref="T:Microsoft.AspNetCore.Mvc.IActionResult"/>.</returns>
+        </member>
+        <member name="T:PipelinesApp.Api.Auth.AuthenticateForm">
+            <summary>
+            Authenticate model.
+            </summary>
+        </member>
+        <member name="P:PipelinesApp.Api.Auth.AuthenticateForm.User">
+            <summary>
+            Gets or sets username.
+            </summary>
+        </member>
+        <member name="P:PipelinesApp.Api.Auth.AuthenticateForm.Password">
+            <summary>
+            Gets or sets password.
+            </summary>
+        </member>
+        <member name="T:PipelinesApp.Api.Auth.AuthResult">
+            <summary>
+            Auth result.
+            </summary>
+        </member>
+        <member name="P:PipelinesApp.Api.Auth.AuthResult.Token">
+            <summary>
+            Gets or sets token.
+            </summary>
+        </member>
+        <member name="T:PipelinesApp.Api.Auth.IUserAuthenticationService">
+            <summary>
+            Authentication service.
+            </summary>
+        </member>
+        <member name="M:PipelinesApp.Api.Auth.IUserAuthenticationService.Authenticate(System.String,System.String)">
+            <summary>
+            Authenticate user.
+            </summary>
+            <param name="username">User.</param>
+            <param name="password">Password.</param>
+            <returns>Token.</returns>
+        </member>
+        <member name="T:PipelinesApp.Api.Core.Queries.QueryNotFoundException">
+            <summary>
+            Exception is used when QueryHandler is not found.
+            </summary>
+        </member>
+        <member name="M:PipelinesApp.Api.Core.Queries.QueryNotFoundException.#ctor(System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PipelinesApp.Api.Core.Queries.QueryNotFoundException"/> class.
+            </summary>
+            <param name="type">
+            The type.
+            </param>
+        </member>
+        <member name="T:PipelinesApp.Api.ExceptionHandling.ApiError">
+            <summary>
+            Api error.
+            </summary>
+        </member>
+        <member name="P:PipelinesApp.Api.ExceptionHandling.ApiError.Code">
+            <summary>
+            Gets or sets api error code.
+            </summary>
+        </member>
+        <member name="P:PipelinesApp.Api.ExceptionHandling.ApiError.Message">
+            <summary>
+            Gets or sets error message.
+            </summary>
+        </member>
+        <member name="P:PipelinesApp.Api.ExceptionHandling.ApiError.Description">
+            <summary>
+            Gets or sets error description.
+            </summary>
+        </member>
+        <member name="P:PipelinesApp.Api.ExceptionHandling.ApiError.DateTime">
+            <summary>
+            Gets or sets server datetime.
+            </summary>
+        </member>
+        <member name="P:PipelinesApp.Api.ExceptionHandling.ApiError.InnerError">
+            <summary>
+            Gets or sets inner error.
+            </summary>
+        </member>
+        <member name="T:PipelinesApp.Api.ExceptionHandling.ApiErrorResponse">
+            <summary>
+            Api error.
+            </summary>
+        </member>
+        <member name="P:PipelinesApp.Api.ExceptionHandling.ApiErrorResponse.RequestId">
+            <summary>
+            Gets or sets request Id.
+            </summary>
+        </member>
+        <member name="P:PipelinesApp.Api.ExceptionHandling.ApiErrorResponse.Error">
+            <summary>
+            Gets or sets error.
+            </summary>
+        </member>
+        <member name="T:PipelinesApp.Api.ExceptionHandling.ApiException">
+            <summary>
+            Exception of api.
+            </summary>
+        </member>
+        <member name="M:PipelinesApp.Api.ExceptionHandling.ApiException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PipelinesApp.Api.ExceptionHandling.ApiException"/> class.
+            </summary>
+            <param name="message">
+            The message.
+            </param>
+            <param name="innerException">
+            The inner exception.
+            </param>
+        </member>
+        <member name="P:PipelinesApp.Api.ExceptionHandling.ApiException.HttpStatusCode">
+            <summary>
+            Gets or sets httpStatusCode code.
+            </summary>
+        </member>
+        <member name="P:PipelinesApp.Api.ExceptionHandling.ApiException.Code">
+            <summary>
+            Gets or sets error code.
+            </summary>
+        </member>
+        <member name="P:PipelinesApp.Api.ExceptionHandling.ApiException.Description">
+            <summary>
+            Gets or sets description.
+            </summary>
+        </member>
+        <member name="P:PipelinesApp.Api.ExceptionHandling.ApiException.DateTime">
+            <summary>
+            Gets or sets datetime.
+            </summary>
+        </member>
+        <member name="M:PipelinesApp.Api.ExceptionHandling.ApiException.Error(System.String,System.Exception)">
+            <summary>
+            Operation Failed. General Error.
+            </summary>
+            <param name="message">
+            The message.
+            </param>
+            <param name="innerException">
+            The inner exception.
+            </param>
+            <returns>
+            The <see cref="T:PipelinesApp.Api.ExceptionHandling.ApiException"/>.
+            </returns>
+        </member>
+        <member name="M:PipelinesApp.Api.ExceptionHandling.ApiException.ErrorInvalidInputData(System.String,System.Exception)">
+            <summary>
+            Operation Failed. The input data did not pass validation.
+            </summary>
+            <param name="message">
+            The message.
+            </param>
+            <param name="innerException">
+            The inner exception.
+            </param>
+            <returns>
+            The <see cref="T:PipelinesApp.Api.ExceptionHandling.ApiException"/>.
+            </returns>
+        </member>
+        <member name="M:PipelinesApp.Api.ExceptionHandling.ApiException.ErrorAuthentication(System.String,System.Exception)">
+            <summary>
+            Operation Failed. The authentication data is incorrect.
+            </summary>
+            <param name="message">
+            The message.
+            </param>
+            <param name="innerException">
+            The inner exception.
+            </param>
+            <returns>
+            The <see cref="T:PipelinesApp.Api.ExceptionHandling.ApiException"/>.
+            </returns>
+        </member>
+        <member name="M:PipelinesApp.Api.ExceptionHandling.ApiException.ErrorAuthorization(System.String,System.Exception)">
+            <summary>
+            Operation Failed. The authorization data is incorrect.
+            </summary>
+            <param name="message">
+            The message.
+            </param>
+            <param name="innerException">
+            The inner exception.
+            </param>
+            <returns>
+            The <see cref="T:PipelinesApp.Api.ExceptionHandling.ApiException"/>.
+            </returns>
+        </member>
+        <member name="M:PipelinesApp.Api.ExceptionHandling.ApiException.ErrorItemNotFound(System.String,System.Exception)">
+            <summary>
+            Operation Failed. Item Not Found.
+            </summary>
+            <param name="message">
+            The message.
+            </param>
+            <param name="innerException">
+            The inner exception.
+            </param>
+            <returns>
+            The <see cref="T:PipelinesApp.Api.ExceptionHandling.ApiException"/>.
+            </returns>
+        </member>
+        <member name="M:PipelinesApp.Api.ExceptionHandling.ApiException.ErrorDuplicateItem(System.String,System.Exception)">
+            <summary>
+            Operation Failed. Duplicate Item Constraint .
+            </summary>
+            <param name="message">
+            The message.
+            </param>
+            <param name="innerException">
+            The inner exception.
+            </param>
+            <returns>
+            The <see cref="T:PipelinesApp.Api.ExceptionHandling.ApiException"/>.
+            </returns>
+        </member>
+        <member name="M:PipelinesApp.Api.ExceptionHandling.ApiException.InternalError(System.String,System.Exception)">
+            <summary>
+            Operation Failed. Internal error.
+            </summary>
+            <param name="message">
+            The message.
+            </param>
+            <param name="innerException">
+            The inner exception.
+            </param>
+            <returns>
+            The <see cref="T:PipelinesApp.Api.ExceptionHandling.ApiException"/>.
+            </returns>
+        </member>
+        <member name="T:PipelinesApp.Api.ExceptionHandling.ExceptionFilter">
+            <summary>
+            Api exception handling.
+            </summary>
+        </member>
+        <member name="M:PipelinesApp.Api.Pipelines.PipelinesController.#ctor(PipelinesApp.Api.Core.Queries.IQueryDispatcher,PipelinesApp.Api.Core.Commands.ICommandDispatcher)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PipelinesApp.Api.Pipelines.PipelinesController"/> class.
+            </summary>
+            <param name="queryDispatcher">
+            <see cref="T:PipelinesApp.Api.Core.Queries.IQueryDispatcher"/>.
+            </param>
+            <param name="commandDispatcher">
+            <see cref="T:PipelinesApp.Api.Core.Commands.ICommandDispatcher"/>.
+            </param>
+        </member>
+        <member name="P:PipelinesApp.Api.Tasks.TaskDbEntity.Name">
+            <summary>
+            Gets or sets the Name of the task.
+            </summary>
+        </member>
+        <member name="P:PipelinesApp.Api.Tasks.TaskDbEntity.AverageTime">
+            <summary>
+            Gets or sets the ​AverageTime ​it takes to run.
+            </summary>
+        </member>
+        <member name="P:PipelinesApp.Api.Tasks.TaskDbEntity.CreatorUserId">
+            <summary>
+            Gets or sets user, who creates this task.
+            </summary>
+        </member>
+        <member name="M:PipelinesApp.Api.Tasks.TasksController.#ctor(PipelinesApp.Api.Core.Queries.IQueryDispatcher,PipelinesApp.Api.Core.Commands.ICommandDispatcher)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PipelinesApp.Api.Tasks.TasksController"/> class.
+            </summary>
+            <param name="queryDispatcher">
+            <see cref="T:PipelinesApp.Api.Core.Queries.IQueryDispatcher"/>.
+            </param>
+            <param name="commandDispatcher">
+            <see cref="T:PipelinesApp.Api.Core.Commands.ICommandDispatcher"/>.
+            </param>
+        </member>
+        <member name="T:PipelinesApp.Api.Tasks.ViewModels.TaskViewModel">
+            <summary>
+            ViewModel is used to view information about the task.
+            </summary>
+        </member>
+        <member name="P:PipelinesApp.Api.Tasks.ViewModels.TaskViewModel.Id">
+            <summary>
+            Gets or sets the Id of the entity.
+            </summary>
+        </member>
+        <member name="P:PipelinesApp.Api.Tasks.ViewModels.TaskViewModel.Name">
+            <summary>
+            Gets or sets the Name of the task.
+            </summary>
+        </member>
+        <member name="P:PipelinesApp.Api.Tasks.ViewModels.TaskViewModel.AverageTime">
+            <summary>
+            Gets or sets the ​AverageTime ​it takes to run.
+            </summary>
+        </member>
+        <member name="P:PipelinesApp.Api.Tasks.ViewModels.TaskViewModel.CreatorUserId">
+            <summary>
+            Gets or sets user, who creates this task.
+            </summary>
+        </member>
+    </members>
+</doc>

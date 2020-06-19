@@ -5,7 +5,7 @@ services:
     image: ${DOCKER_REGISTRY-}pipelinesapi
     build:
       context: .
-      dockerfile: Pipelines.Api/Dockerfile
+      dockerfile: PipelinesApp.Api/Dockerfile
     depends_on: 
         - mongo
     environment:      
