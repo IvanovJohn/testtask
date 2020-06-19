@@ -3,9 +3,9 @@ import axios from '@/core/axiosWrapper';
 const resource = '/tasks';
 export default {
     list(){
-        return axios.get(`${resource}`);
+        return axios.getInstance().get(`${resource}`);
     },
     add(task){
-        return axios.post(`${resource}`, task);
+        return axios.getInstance().post(`${resource}`, task);
     }
 }

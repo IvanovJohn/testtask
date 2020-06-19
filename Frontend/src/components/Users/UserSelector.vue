@@ -9,7 +9,7 @@
 
 <script>
 import usersRepository from './usersRepository';
-import authService from './authService';
+import authService from '@/core/authService';
 
 export default {
     name: 'UserSelector', 

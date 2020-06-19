@@ -1,6 +1,6 @@
 <template>
     <span>
-        <b-button v-b-modal.modalTaskCreation>Create</b-button>
+        <b-button v-b-modal.modalTaskCreation v-show="showCreateButton">Create</b-button>
 
         <b-modal id="modalTaskCreation" title="Create task"  @ok="handleOk" @show="handleShow">
             <b-form ref="form" @submit.stop.prevent="handleSubmit">
@@ -30,7 +30,7 @@
 <script>
   import { validationMixin } from "vuelidate";
   import { required, minLength } from "vuelidate/lib/validators";
-
+  import authService from '@/core/authService';
   import tasksRepository from './tasksRepository';
 
 
@@ -41,7 +41,8 @@
             return {
                  form: {
                     name: ''
-                 }                    
+                 },
+                 showCreateButton: authService.currentUser                    
             }
         },
         validations: {  

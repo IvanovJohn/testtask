@@ -3,7 +3,8 @@ import config from '../config';
 
 let vueRef=null;
 
-function errorResponseHandler(error) {    
+function errorResponseHandler(error) { 
+    console.log(this)   
     if (error.response) {        
         vueRef.$bvToast.toast(error.response.data.error.message, {
             title: 'Error',           
@@ -14,15 +15,24 @@ function errorResponseHandler(error) {
     return Promise.reject(error);
 }
 
-let axiosInstance = axios.create({baseURL: config.apiUrl})
-axiosInstance.interceptors.response.use(
-    response => response,
-    errorResponseHandler
- )
- axiosInstance.init = function(vue)
- {
-    vueRef=vue;
- }
-
-export default axiosInstance
+export default {
+    getInstance() {
+        var instance = axios.create({baseURL: config.apiUrl});
+        instance.interceptors.response.use(
+            response => response,
+            errorResponseHandler
+        )
+        return instance
+    },
+    init(vue) {
+        vueRef = vue;       
+    },
+    setAuthHeader(token){        
+        if(token){
+            axios.defaults.headers.common['Authorization'] = "Bearer " + token
+        }else{
+            delete axios.defaults.headers.common['Authorization'];
+        }
+    }
+}
     
