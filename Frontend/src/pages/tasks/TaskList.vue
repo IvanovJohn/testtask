@@ -1,5 +1,4 @@
-<template>
-  
+<template>  
     <b-table
       id="tasks-table"
       ref="table"
@@ -18,7 +17,8 @@
         {{averageTime.value ? averageTime.value : '-'}}
       </template>
       <template v-slot:cell(actions)="data">                             
-        <b-button size="sm" variant="outline" class="m-0 p-0" @click="deleteTask(data.item)" >
+        <b-button size="sm" variant="outline" class="m-0 p-0" @click="deleteTask(data.item)"
+         v-if="isDeleteButtonVisible(data.item)" >
           <b-icon icon="trash-fill" aria-hidden="true" ></b-icon>
         </b-button>         
       </template>
@@ -26,7 +26,7 @@
         <col
           v-for="field in scope.fields"
           :key="field.key"
-          :style="{ width: field.key === 'actions' ? '30px' : '' }"
+          :style="{ width: field.key === 'actions' ? '30px' : '' }"          
         >
       </template>
     </b-table>
@@ -35,6 +35,7 @@
 
 <script>
   import tasksRepository from './tasksRepository';
+  import authService from '@/core/authService';
 
   export default {
     name: 'task-list',
@@ -56,6 +57,9 @@
           }         
         ]
       }
+    },
+    computed: {
+       
     },
     methods: {
       itemsProvider () {
@@ -82,6 +86,13 @@
                 })
               }
             })            
+      },
+      isDeleteButtonVisible(item) {
+        if(!authService.currentUser){
+          return false
+        }
+        
+        return item.creatorUserId === authService.currentUser.id
       }
     }
   }

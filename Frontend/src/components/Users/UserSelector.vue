@@ -31,8 +31,8 @@ export default {
         if(newValue === this.options[0].name){
           newValue = null;
         }
-
-        authService.login(newValue, null);
+        var user = this.options.find(item=> item.name===newValue)
+        authService.login(user, null);
       }
     }
 }
