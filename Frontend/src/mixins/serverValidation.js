@@ -6,7 +6,10 @@ export default {
             form: {                
                 serverErrors:{},
             },
-            serverValidation: {            
+            serverValidation: {  
+                form: {
+                    
+                }          
             }
         }
     },
