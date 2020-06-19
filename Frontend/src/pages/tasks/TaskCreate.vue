@@ -40,17 +40,16 @@
   import { validationMixin } from "vuelidate";
   import { required, minLength } from "vuelidate/lib/validators";
   import authService from '@/core/authService';
-  import tasksRepository from './tasksRepository';
-  import { merge } from "lodash"
+  import tasksRepository from './tasksRepository';  
+  import serverValidationMixin from '@/mixins/serverValidation'
 
   export default {
         name: 'task-create', 
-        mixins: [validationMixin],   
+        mixins: [validationMixin, serverValidationMixin],   
         data() {
             return {                 
                  form: {
-                    Name: '',
-                    serverErrors:{},
+                    Name: ''                    
                  },
                  clientValidation: {
                     form: {
@@ -59,26 +58,11 @@
                            minLength: minLength(3)
                         }
                     }
-                 },                
-                 serverValidation: {
-                     form: {}
-                 },                
+                 },
                  showCreateButton: authService.currentUser                    
             }
-        },
-        computed: {            
-            rules() {
-                return merge({}, this.serverValidation, this.clientValidation);
-            }
-        },        
-        validations() {
-            return this.rules;
-        },
-        methods: {
-            validateState(name) {
-                 const { $dirty, $error } = this.$v.form[name];
-                 return $dirty ? !$error : null;                              
-            },            
+        },                  
+        methods: {                     
             resetModal() {
                 this.form.Name = ''; 
                 this.$v.$reset();                 
@@ -107,35 +91,13 @@
                     });
                 }).catch(error => {                    
                     if (error.response.status == 400) {
-                        merge(this.form.serverErrors, error.response.data.errors);                                            
-                        var validators = { form:{}}
-                        for(var key in error.response.data.errors) {
-                            validators.form[key] =  {
-                                serverError: ()=> { return false }
-                            }
-                        }
-                        this.serverValidation = validators      
+                        this.handleServerErrors(error.response.data.errors)                          
                     }
                 });
             },
             handleShow() {
                 this.resetModal();
-            },
-            clearServerErrors: function() {                
-                this.serverValidation.form = {};                              
-            },
-            clearServerError: function(model, fieldName) {                
-                if (Object.prototype.hasOwnProperty.call(model, "serverErrors")) {
-                    if (Object.prototype.hasOwnProperty.call(model.serverErrors, fieldName)) {
-                        delete model.serverErrors[fieldName];
-                    }
-                }                
-                delete this.serverValidation.form[fieldName];
-                // hack to recompute rules                
-                var k = this.serverValidation;
-                this.serverValidation = {};
-                this.serverValidation = k;                
-            }
+            }            
         }
   }
 </script>
