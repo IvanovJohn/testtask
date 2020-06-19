@@ -64,6 +64,7 @@ namespace Pipelines.Api
             // TODO: register by convention
             services.AddScoped<IQuery<TasksCriterion, IEnumerable<TaskViewModel>>, TasksQuery>();
             services.AddScoped<ICommand<CreateTaskCommandContext>, CreateTaskCommand>();
+            services.AddScoped<ICommand<DeleteTaskCommandContext>, DeleteTaskCommand>();
 
             services.AddScoped<IQuery<UsersCriterion, IEnumerable<UserViewModel>>, UsersQuery>();
             services.AddScoped<IQuery<UserByNameCriterion, UserDbEntity>, UserByNameQuery>();

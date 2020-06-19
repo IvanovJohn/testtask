@@ -36,6 +36,14 @@
             this.commandDispatcher = commandDispatcher;
         }
 
+        protected string CurrentUserId
+        {
+            get
+            {
+                return this.User.GetUserIdFromClaims();
+            }
+        }
+
         [HttpGet]
         [Route("")]
         public async Task<ActionResult<IEnumerable<TaskViewModel>>> GetTasks()
@@ -51,8 +59,19 @@
             await this.commandDispatcher.Execute(new CreateTaskCommandContext
                                                   {
                                                       Form = form,
-                                                      CurrentUserId = this.User.GetUserIdFromClaims(),
+                                                      CurrentUserId = this.CurrentUserId,
                                                   });
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task Delete(string id)
+        {
+            await this.commandDispatcher.Execute(new DeleteTaskCommandContext
+                                                     {
+                                                         Id = id,
+                                                         CurrentUserId = this.CurrentUserId,
+                                                     });
         }
     }
 }

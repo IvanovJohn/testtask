@@ -7,5 +7,8 @@ export default {
     },
     add(task){
         return axios.getInstance().post(`${resource}`, task);
+    },
+    delete(id){
+        return axios.getInstance().delete(`${resource}/${id}`);
     }
 }
