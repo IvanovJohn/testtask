@@ -11,16 +11,25 @@
                     >
                     <b-form-input
                     id="txtName"
-                    v-model="form.name"
-                     :state="validateState('name')"
+                    v-model="form.Name"
+                     :state="validateState('Name')"
                     type="text"
-                    required
+                    autocomplete="off"                    
                     placeholder="Enter task name"
                     aria-describedby="txtNameErrorDescription"
-                    ></b-form-input>
+                    @input="clearServerError($v.form.$model, 'Name')"
+                    ></b-form-input>                 
                     <b-form-invalid-feedback
-                        id="txtNameErrorDescription"
-                        >This is a required field and must be at least 3 characters.</b-form-invalid-feedback>
+                        id="txtNameErrorDescription">
+                         <div v-if="$v.form.Name.serverError !== false">
+                            This is a required field and must be at least 3 characters.
+                        </div>
+                        <div v-if="$v.form.Name.serverError === false">
+                            <p v-for="error of form.serverErrors['Name']" v-bind:Key="error">
+                                {{ error }}
+                            </p>
+                        </div>
+                    </b-form-invalid-feedback>                    
                 </b-form-group>
             </b-form>
         </b-modal>
@@ -32,34 +41,46 @@
   import { required, minLength } from "vuelidate/lib/validators";
   import authService from '@/core/authService';
   import tasksRepository from './tasksRepository';
-
+  import { merge } from "lodash"
 
   export default {
         name: 'task-create', 
         mixins: [validationMixin],   
         data() {
-            return {
+            return {                 
                  form: {
-                    name: ''
+                    Name: '',
+                    serverErrors:{},
                  },
+                 clientValidation: {
+                    form: {
+                        Name: {
+                           required,
+                           minLength: minLength(3)
+                        }
+                    }
+                 },                
+                 serverValidation: {
+                     form: {}
+                 },                
                  showCreateButton: authService.currentUser                    
             }
         },
-        validations: {  
-            form:{          
-                name: {
-                    required,
-                    minLength: minLength(3)
-                }     
-            }       
+        computed: {            
+            rules() {
+                return merge({}, this.serverValidation, this.clientValidation);
+            }
+        },        
+        validations() {
+            return this.rules;
         },
         methods: {
             validateState(name) {
-                const { $dirty, $error } = this.$v.form[name];
-                return $dirty ? !$error : null;
+                 const { $dirty, $error } = this.$v.form[name];
+                 return $dirty ? !$error : null;                              
             },            
             resetModal() {
-                this.form.name = ''; 
+                this.form.Name = ''; 
                 this.$v.$reset();                 
             },
             handleOk(bvModalEvt) {        
@@ -68,6 +89,7 @@
             },
             handleSubmit() {
                 this.$v.form.$touch();
+                this.clearServerErrors();
                 if (this.$v.form.$anyError) {
                     return;
                 }
@@ -83,10 +105,36 @@
                         });               
                         this.$emit('onTaskCreated');
                     });
+                }).catch(error => {                    
+                    if (error.response.status == 400) {
+                        merge(this.form.serverErrors, error.response.data.errors);                                            
+                        var validators = { form:{}}
+                        for(var key in error.response.data.errors) {
+                            validators.form[key] =  {
+                                serverError: ()=> { return false }
+                            }
+                        }
+                        this.serverValidation = validators      
+                    }
                 });
             },
             handleShow() {
                 this.resetModal();
+            },
+            clearServerErrors: function() {                
+                this.serverValidation.form = {};                              
+            },
+            clearServerError: function(model, fieldName) {                
+                if (Object.prototype.hasOwnProperty.call(model, "serverErrors")) {
+                    if (Object.prototype.hasOwnProperty.call(model.serverErrors, fieldName)) {
+                        delete model.serverErrors[fieldName];
+                    }
+                }                
+                delete this.serverValidation.form[fieldName];
+                // hack to recompute rules                
+                var k = this.serverValidation;
+                this.serverValidation = {};
+                this.serverValidation = k;                
             }
         }
   }

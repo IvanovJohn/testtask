@@ -3,14 +3,15 @@ import config from '../config';
 
 let vueRef=null;
 
-function errorResponseHandler(error) { 
-    console.log(this)   
-    if (error.response) {        
-        vueRef.$bvToast.toast(error.response.data.error.message, {
-            title: 'Error',           
-            variant: 'danger',
-            toaster: 'b-toaster-top-center'
-        });               
+function errorResponseHandler(error) {
+    if (error.response) {  
+        if(error.response.data.error){
+            vueRef.$bvToast.toast(error.response.data.error.message, {
+                title: 'Error',           
+                variant: 'danger',
+                toaster: 'b-toaster-top-center'
+            });               
+        }
     }
     return Promise.reject(error);
 }
