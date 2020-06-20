@@ -16,6 +16,9 @@ namespace PipelinesApp.Api
     using PipelinesApp.Api.Core.Commands;
     using PipelinesApp.Api.Core.Queries;
     using PipelinesApp.Api.ExceptionHandling;
+    using PipelinesApp.Api.Pipelines.Commands;
+    using PipelinesApp.Api.Pipelines.Queries;
+    using PipelinesApp.Api.Pipelines.ViewModels;
     using PipelinesApp.Api.Settings;
     using PipelinesApp.Api.Tasks;
     using PipelinesApp.Api.Tasks.Commands;
@@ -63,15 +66,6 @@ namespace PipelinesApp.Api
             services.AddScoped<IQueryDispatcher, QueryDispatcher>();
             services.AddScoped<ICommandDispatcher, CommandDispatcher>();
 
-            // TODO: register by convention
-            services.AddScoped<IQuery<TasksCriterion, IEnumerable<TaskViewModel>>, TasksQuery>();
-            services.AddScoped<IQuery<TaskByIdCriterion, TaskViewModel>, TaskByIdQuery>();
-            services.AddScoped<ICommand<CreateTaskCommandContext>, CreateTaskCommand>();
-            services.AddScoped<ICommand<DeleteTaskCommandContext>, DeleteTaskCommand>();
-
-            services.AddScoped<IQuery<UsersCriterion, IEnumerable<UserViewModel>>, UsersQuery>();
-            services.AddScoped<IQuery<UserByNameCriterion, UserDbEntity>, UserByNameQuery>();
-
             services.AddAuthentication(x =>
                     {
                         x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -92,6 +86,20 @@ namespace PipelinesApp.Api
 
             services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
             services.AddSingleton<IAuthorizationHandler, TaskAuthorizationHandler>();
+
+            // TODO: register by convention
+            services.AddScoped<IQuery<TasksCriterion, IEnumerable<TaskViewModel>>, TasksQuery>();
+            services.AddScoped<IQuery<TaskByIdCriterion, TaskViewModel>, TaskByIdQuery>();
+            services.AddScoped<ICommand<CreateTaskCommandContext>, CreateTaskCommand>();
+            services.AddScoped<ICommand<DeleteTaskCommandContext>, DeleteTaskCommand>();
+
+            services.AddScoped<IQuery<UsersCriterion, IEnumerable<UserViewModel>>, UsersQuery>();
+            services.AddScoped<IQuery<UserByNameCriterion, UserDbEntity>, UserByNameQuery>();
+
+            services.AddScoped<IQuery<PipelinesCriterion, IEnumerable<PipelineViewModel>>, PipelinesQuery>();
+            services.AddScoped<IQuery<PipelineByIdCriterion, PipelineViewModel>, PipelineByIdQuery>();
+            services.AddScoped<ICommand<CreatePipelineCommandContext>, CreatePipelineCommand>();
+            services.AddScoped<ICommand<DeletePipelineCommandContext>, DeletePipelineCommand>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

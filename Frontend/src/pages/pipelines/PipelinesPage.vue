@@ -1,18 +1,34 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <div >
+    <h1>Pipelines</h1>
+    <div class="row">
+      <div class="col mb-2 text-right">
+        <pipeline-create v-on:onPipelineCreated="refreshList"/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <pipeline-list ref="pipelineList"/>
+      </div>
+    </div>
+  </div>  
 </template>
 
 <script>
 
-import HelloWorld from '@/components/HelloWorld.vue'
+import PipelineList from './PipelineList'
+import PipelineCreate from './PipelineCreate'
 
 export default {
-  name: 'Home',
+  name: 'Pipelines',
   components: {
-    HelloWorld
+    PipelineList,
+    PipelineCreate
+  },
+  methods: {
+    refreshList(){
+      this.$refs.pipelineList.refresh();
+    }
   }
 }
 </script>

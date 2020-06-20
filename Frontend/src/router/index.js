@@ -26,7 +26,7 @@ const router = new VueRouter({
 
 router.reloadCurrentPage = function(){
   const to = router.currentRoute;
-  router.replace('/').then(()=>{
+  router.replace('/fakeRoute').then(()=>{
       router.replace(to)
   });      
 }

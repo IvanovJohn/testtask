@@ -257,6 +257,16 @@
             Api exception handling.
             </summary>
         </member>
+        <member name="P:PipelinesApp.Api.Pipelines.PipelineDbEntity.Name">
+            <summary>
+            Gets or sets the Name of the task.
+            </summary>
+        </member>
+        <member name="P:PipelinesApp.Api.Pipelines.PipelineDbEntity.CreatorUserId">
+            <summary>
+            Gets or sets user, who creates this task.
+            </summary>
+        </member>
         <member name="M:PipelinesApp.Api.Pipelines.PipelinesController.#ctor(PipelinesApp.Api.Core.Queries.IQueryDispatcher,PipelinesApp.Api.Core.Commands.ICommandDispatcher)">
             <summary>
             Initializes a new instance of the <see cref="T:PipelinesApp.Api.Pipelines.PipelinesController"/> class.
@@ -267,6 +277,26 @@
             <param name="commandDispatcher">
             <see cref="T:PipelinesApp.Api.Core.Commands.ICommandDispatcher"/>.
             </param>
+        </member>
+        <member name="T:PipelinesApp.Api.Pipelines.ViewModels.PipelineViewModel">
+            <summary>
+            ViewModel is used to view information about the pipeline.
+            </summary>
+        </member>
+        <member name="P:PipelinesApp.Api.Pipelines.ViewModels.PipelineViewModel.Id">
+            <summary>
+            Gets or sets the Id of the entity.
+            </summary>
+        </member>
+        <member name="P:PipelinesApp.Api.Pipelines.ViewModels.PipelineViewModel.Name">
+            <summary>
+            Gets or sets the Name of the pipeline.
+            </summary>
+        </member>
+        <member name="P:PipelinesApp.Api.Pipelines.ViewModels.PipelineViewModel.CreatorUserId">
+            <summary>
+            Gets or sets user, who creates this pipeline.
+            </summary>
         </member>
         <member name="P:PipelinesApp.Api.Tasks.TaskDbEntity.Name">
             <summary>

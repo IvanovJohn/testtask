@@ -9,10 +9,10 @@
     using PipelinesApp.Api.Auth;
     using PipelinesApp.Api.Core.Commands;
     using PipelinesApp.Api.Core.Queries;
-    using PipelinesApp.Api.Tasks.Commands;
-    using PipelinesApp.Api.Tasks.Forms;
-    using PipelinesApp.Api.Tasks.Queries;
-    using PipelinesApp.Api.Tasks.ViewModels;
+    using PipelinesApp.Api.Pipelines.Commands;
+    using PipelinesApp.Api.Pipelines.Forms;
+    using PipelinesApp.Api.Pipelines.Queries;
+    using PipelinesApp.Api.Pipelines.ViewModels;
 
     [Route("api/pipelines")]
     [ApiController]
@@ -36,27 +36,19 @@
             this.commandDispatcher = commandDispatcher;
         }
 
-        protected string CurrentUserId
-        {
-            get
-            {
-                return this.User.GetUserIdFromClaims();
-            }
-        }
-
         [HttpGet]
         [Route("")]
-        public async Task<ActionResult<IEnumerable<TaskViewModel>>> GetTasks()
+        public async Task<ActionResult<IEnumerable<PipelineViewModel>>> GetPipelines()
         {
-            var tasks = await this.queryDispatcher.Ask<TasksCriterion, IEnumerable<TaskViewModel>>(new TasksCriterion());
-            return tasks.ToList();
+            var pipelines = await this.queryDispatcher.Ask<PipelinesCriterion, IEnumerable<PipelineViewModel>>(new PipelinesCriterion());
+            return pipelines.ToList();
         }
 
         [HttpPost]
         [Route("")]
-        public async Task Create(CreateTaskForm form)
+        public async Task Create(CreatePipelineForm form)
         {
-            await this.commandDispatcher.Execute(new CreateTaskCommandContext
+            await this.commandDispatcher.Execute(new CreatePipelineCommandContext
                                                   {
                                                       Form = form,
                                                       CurrentUser = this.User,
@@ -67,7 +59,7 @@
         [Route("{id}")]
         public async Task Delete(string id)
         {
-            await this.commandDispatcher.Execute(new DeleteTaskCommandContext
+            await this.commandDispatcher.Execute(new DeletePipelineCommandContext
                                                      {
                                                          Id = id,
                                                          CurrentUser = this.User,

@@ -36,14 +36,6 @@
             this.commandDispatcher = commandDispatcher;
         }
 
-        protected string CurrentUserId
-        {
-            get
-            {
-                return this.User.GetUserIdFromClaims();
-            }
-        }
-
         [HttpGet]
         [Route("")]
         public async Task<ActionResult<IEnumerable<TaskViewModel>>> GetTasks()
