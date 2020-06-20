@@ -31,8 +31,20 @@
                         </div>
                     </b-form-invalid-feedback>                    
                 </b-form-group>
-
-                <task-selector v-on:onTaskSelected="taskSelected" />
+                <b-form-group
+                    id="input-group-1"
+                    label="Tasks:"                    
+                    >
+                    <ul>
+                        <li v-for="item in form.Tasks" :key="item.id">
+                            {{ item.name }}                             
+                            <b-button size="sm" variant="outline" class="m-0 p-0" @click="removeTask(item)">
+                                <b-icon icon="x" aria-hidden="true" ></b-icon>
+                            </b-button>    
+                        </li>
+                    </ul>
+                  <task-selector v-on:onTaskSelected="taskSelected" />
+                </b-form-group>
             </b-form>
         </b-modal>
 
@@ -52,14 +64,15 @@
         data() {
             return {                 
                  form: {
-                    Name: ''                    
+                    Name: '',
+                    Tasks: []                  
                  },
                  clientValidation: {
                     form: {
                         Name: {
                            required,
                            minLength: minLength(3)
-                        }
+                        }                        
                     }
                  },
                  showCreateButton: authService.currentUser                    
@@ -101,9 +114,15 @@
             handleShow() {
                 this.resetModal();
             },
-            taskSelected(task){
-                console.log(task)
-            }           
+            taskSelected(task){                
+                this.form.Tasks.push(task)
+            },
+            removeTask(task){
+                const index = this.form.Tasks.indexOf(task);
+                if (index > -1) {
+                    this.form.Tasks.splice(index, 1);
+                }
+            }          
         },
         components: {
             TaskSelector

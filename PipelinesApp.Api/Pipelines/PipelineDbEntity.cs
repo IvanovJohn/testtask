@@ -20,5 +20,10 @@
         /// </summary>
         [BsonElement("creatorUserId")]
         public string CreatorUserId { get; set; }
+
+        /// <summary>
+        /// Gets or sets array of Tasks ids to run.
+        /// </summary>
+        public string[] TasksId { get; set; }
     }
 }
