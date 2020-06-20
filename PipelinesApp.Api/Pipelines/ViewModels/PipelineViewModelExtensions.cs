@@ -2,14 +2,16 @@
 {
     internal static class PipelineViewModelExtensions
     {
-        public static PipelineViewModel ToViewModel(this PipelineDbEntity entity)
+        public static void Fill(this PipelineViewModel viewModel, PipelineDbEntity entity)
         {
-            return new PipelineViewModel
-            {
-                           Id = entity.Id,
-                           Name = entity.Name,
-                           CreatorUserId = entity.CreatorUserId,
-            };
+            viewModel.Id = entity.Id;
+            viewModel.Name = entity.Name;
+            viewModel.CreatorUserId = entity.CreatorUserId;
+        }
+
+        public static void Fill(this PipelineDetailsViewModel viewModel, PipelineDbEntity entity)
+        {
+            ((PipelineViewModel)viewModel).Fill(entity);
         }
     }
 }

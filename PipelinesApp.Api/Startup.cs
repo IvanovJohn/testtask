@@ -89,6 +89,7 @@ namespace PipelinesApp.Api
 
             // TODO: register by convention
             services.AddScoped<IQuery<TasksCriterion, IEnumerable<TaskViewModel>>, TasksQuery>();
+            services.AddScoped<IQuery<TaskByIdsCriterion, IEnumerable<TaskViewModel>>, TaskByIdsQuery>();
             services.AddScoped<IQuery<TaskByIdCriterion, TaskViewModel>, TaskByIdQuery>();
             services.AddScoped<ICommand<CreateTaskCommandContext>, CreateTaskCommand>();
             services.AddScoped<ICommand<DeleteTaskCommandContext>, DeleteTaskCommand>();
@@ -97,7 +98,7 @@ namespace PipelinesApp.Api
             services.AddScoped<IQuery<UserByNameCriterion, UserDbEntity>, UserByNameQuery>();
 
             services.AddScoped<IQuery<PipelinesCriterion, IEnumerable<PipelineViewModel>>, PipelinesQuery>();
-            services.AddScoped<IQuery<PipelineByIdCriterion, PipelineViewModel>, PipelineByIdQuery>();
+            services.AddScoped<IQuery<PipelineByIdCriterion, PipelineDetailsViewModel>, PipelineByIdQuery>();
             services.AddScoped<ICommand<CreatePipelineCommandContext>, CreatePipelineCommand>();
             services.AddScoped<ICommand<DeletePipelineCommandContext>, DeletePipelineCommand>();
         }

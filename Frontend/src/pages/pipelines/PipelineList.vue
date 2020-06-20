@@ -13,14 +13,18 @@
           <strong> Loading...</strong>
         </div>
       </template>
-      <template v-slot:cell(averageTime)="averageTime">        
-        {{averageTime.value ? averageTime.value : '-'}}
+      <template v-slot:cell(name)="row">  
+        <router-link :to="{ name: 'Pipeline', params: { id: row.item.id }}">{{ row.item.name }}  </router-link>
+                
+      </template>
+      <template v-slot:cell(forecastTime)="forecastTime">        
+        {{forecastTime.value ? forecastTime.value : '-'}}
       </template>
       <template v-slot:cell(actions)="data">                             
         <b-button size="sm" variant="outline" class="m-0 p-0" @click="deletePipeline(data.item)"
          v-if="isDeleteButtonVisible(data.item)" >
           <b-icon icon="trash-fill" aria-hidden="true" ></b-icon>
-        </b-button>         
+        </b-button>
       </template>
       <template v-slot:table-colgroup="scope">
         <col
@@ -48,8 +52,8 @@
             label: 'Name',
           },
           {
-            key: 'averageTime',
-            label: 'Average time, ms',
+            key: 'forecastTime',
+            label: 'Forecast time, ms',
           },
           {
             key: 'actions',

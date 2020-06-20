@@ -6,7 +6,6 @@
 
     using Microsoft.AspNetCore.Mvc;
 
-    using PipelinesApp.Api.Auth;
     using PipelinesApp.Api.Core.Commands;
     using PipelinesApp.Api.Core.Queries;
     using PipelinesApp.Api.Pipelines.Commands;
@@ -42,6 +41,15 @@
         {
             var pipelines = await this.queryDispatcher.Ask<PipelinesCriterion, IEnumerable<PipelineViewModel>>(new PipelinesCriterion());
             return pipelines.ToList();
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<ActionResult<PipelineDetailsViewModel>> GetById(string id)
+        {
+            return
+                await this.queryDispatcher.Ask<PipelineByIdCriterion, PipelineDetailsViewModel>(
+                    new PipelineByIdCriterion { Id = id });
         }
 
         [HttpPost]

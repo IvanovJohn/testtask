@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Pipelines from '../pages/pipelines/PipelinesPage.vue'
+import Pipeline from '../pages/pipelines/PipelinePage.vue'
 import Tasks from '../pages/tasks/TasksPage.vue'
 
 Vue.use(VueRouter)
@@ -10,6 +11,11 @@ Vue.use(VueRouter)
     path: '/',
     name: 'Pipelines',
     component: Pipelines
+  },
+  {
+    path: '/pipelines/:id',
+    name: 'Pipeline',
+    component: Pipeline
   },
   {
     path: '/tasks',

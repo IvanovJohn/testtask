@@ -20,7 +20,12 @@
         {
             // TODO: add pagination
             var result = await this.PipelinesCollection.FindAsync(t => true);
-            return result.ToList().Select(p => p.ToViewModel());
+            return result.ToList().Select(p =>
+                {
+                    var viewModel = new PipelineViewModel();
+                    viewModel.Fill(p);
+                    return viewModel;
+                });
         }
     }
 }

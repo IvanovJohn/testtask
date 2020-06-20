@@ -5,6 +5,9 @@ export default {
     list(){
         return axios.getInstance().get(`${resource}`);
     },
+    getById(id){
+        return axios.getInstance().get(`${resource}/${id}`);
+    },
     add(task){
         return axios.getInstance().post(`${resource}`, task);
     },
