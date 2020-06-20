@@ -4,5 +4,6 @@
 
     public class TasksCriterion : ICriterion
     {
+        public string SearchString { get; set; }
     }
 }

@@ -2,8 +2,11 @@ import axios from '@/core/axiosWrapper';
 
 const resource = '/tasks';
 export default {
-    list(){
-        return axios.getInstance().get(`${resource}`);
+    list(searchStr){
+        if(!searchStr){
+            return axios.getInstance().get(`${resource}`);
+        }
+        return axios.getInstance().get(`${resource}?s=${searchStr}`);
     },
     add(task){
         return axios.getInstance().post(`${resource}`, task);

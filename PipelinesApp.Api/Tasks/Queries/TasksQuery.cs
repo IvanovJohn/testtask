@@ -19,7 +19,17 @@
         public override async Task<IEnumerable<TaskViewModel>> Ask(TasksCriterion criterion)
         {
             // TODO: add pagination
-            var result = await this.TasksCollection.FindAsync(t => true);
+            // TODO: refactor using ExpressionHelper
+            IAsyncCursor<TaskDbEntity> result;
+            if (string.IsNullOrEmpty(criterion.SearchString))
+            {
+                result = await this.TasksCollection.FindAsync(p => true);
+            }
+            else
+            {
+                result = await this.TasksCollection.FindAsync(p => p.Name.Contains(criterion.SearchString));
+            }
+
             return result.ToList().Select(p => p.ToViewModel());
         }
     }

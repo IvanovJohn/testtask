@@ -31,6 +31,8 @@
                         </div>
                     </b-form-invalid-feedback>                    
                 </b-form-group>
+
+                <task-selector v-on:onTaskSelected="taskSelected" />
             </b-form>
         </b-modal>
 
@@ -42,6 +44,7 @@
   import authService from '@/core/authService';
   import pipelinesRepository from './pipelinesRepository';  
   import serverValidationMixin from '@/mixins/serverValidation'
+  import TaskSelector from '@/pages/tasks/TaskSelector'
 
   export default {
         name: 'pipeline-create', 
@@ -97,7 +100,13 @@
             },
             handleShow() {
                 this.resetModal();
-            }            
+            },
+            taskSelected(task){
+                console.log(task)
+            }           
+        },
+        components: {
+            TaskSelector
         }
   }
 </script>

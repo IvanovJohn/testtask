@@ -6,7 +6,6 @@
 
     using Microsoft.AspNetCore.Mvc;
 
-    using PipelinesApp.Api.Auth;
     using PipelinesApp.Api.Core.Commands;
     using PipelinesApp.Api.Core.Queries;
     using PipelinesApp.Api.Tasks.Commands;
@@ -38,9 +37,9 @@
 
         [HttpGet]
         [Route("")]
-        public async Task<ActionResult<IEnumerable<TaskViewModel>>> GetTasks()
+        public async Task<ActionResult<IEnumerable<TaskViewModel>>> GetTasks(string s)
         {
-            var tasks = await this.queryDispatcher.Ask<TasksCriterion, IEnumerable<TaskViewModel>>(new TasksCriterion());
+            var tasks = await this.queryDispatcher.Ask<TasksCriterion, IEnumerable<TaskViewModel>>(new TasksCriterion { SearchString = s });
             return tasks.ToList();
         }
 
