@@ -1,6 +1,5 @@
 ﻿namespace PipelinesApp.Api.Pipelines.Commands
 {
-    using System;
     using System.Diagnostics;
     using System.IO;
     using System.Linq;
@@ -12,8 +11,10 @@
     using Microsoft.Extensions.Logging;
 
     using PipelinesApp.Api.BackgroundTasks;
+    using PipelinesApp.Api.Core.Events;
     using PipelinesApp.Api.Core.Queries;
     using PipelinesApp.Api.Helpers;
+    using PipelinesApp.Api.Pipelines.Events;
     using PipelinesApp.Api.Pipelines.Queries;
     using PipelinesApp.Api.Pipelines.ViewModels;
     using PipelinesApp.Api.Settings;
@@ -24,18 +25,21 @@
         private readonly IBackgroundTaskQueue backgroundTaskQueue;
         private readonly ILogger<RunPipelineCommand> logger;
         private readonly CancellationToken appCancellationToken;
+        private readonly IEventDispatcher eventDispatcher;
 
         public RunPipelineCommand(
             IMongoDbSettings mongoDbSettings,
             IQueryDispatcher queryDispatcher,
             IBackgroundTaskQueue backgroundTaskQueue,
             ILogger<RunPipelineCommand> logger,
-            IHostApplicationLifetime applicationLifetime)
+            IHostApplicationLifetime applicationLifetime,
+            IEventDispatcher eventDispatcher)
             : base(mongoDbSettings)
         {
             this.queryDispatcher = queryDispatcher;
             this.backgroundTaskQueue = backgroundTaskQueue;
             this.logger = logger;
+            this.eventDispatcher = eventDispatcher;
             this.appCancellationToken = applicationLifetime.ApplicationStopping;
         }
 
@@ -68,6 +72,7 @@
                 while (true);
             }
 
+            this.eventDispatcher.PublishEvent(new PipelineCompletedEvent { Pipeline = pipeline });
             this.logger.LogInformation($"Pipeline {pipeline.Name} completed");
         }
 

@@ -18,7 +18,9 @@ namespace PipelinesApp.Api
     using PipelinesApp.Api.Core.Events;
     using PipelinesApp.Api.Core.Queries;
     using PipelinesApp.Api.ExceptionHandling;
+    using PipelinesApp.Api.Notification;
     using PipelinesApp.Api.Pipelines.Commands;
+    using PipelinesApp.Api.Pipelines.Events;
     using PipelinesApp.Api.Pipelines.Queries;
     using PipelinesApp.Api.Pipelines.ViewModels;
     using PipelinesApp.Api.Settings;
@@ -48,9 +50,10 @@ namespace PipelinesApp.Api
                         builder =>
                             {
                                 builder
-                                    .AllowAnyOrigin()
+                                    .AllowAnyHeader()
                                     .AllowAnyMethod()
-                                    .AllowAnyHeader();
+                                    .SetIsOriginAllowed((host) => true)
+                                    .AllowCredentials();
                             });
                 });
             services.AddControllers(p => { p.Filters.Add(typeof(ExceptionFilter)); });
@@ -59,6 +62,8 @@ namespace PipelinesApp.Api
                 {
                     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Pipelines API", Version = "v1" });
                 });
+
+            services.AddSignalR();
 
             services.Configure<MongoDbSettings>(this.Configuration.GetSection(nameof(MongoDbSettings)));
 
@@ -92,6 +97,7 @@ namespace PipelinesApp.Api
 
             services.AddHostedService<QueuedHostedService>();
             services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
+            services.AddScoped<INotificationService, NotificationService>();
 
             // TODO: register by convention
             services.AddScoped<IQuery<TasksCriterion, IEnumerable<TaskViewModel>>, TasksQuery>();
@@ -108,6 +114,7 @@ namespace PipelinesApp.Api
             services.AddScoped<ICommand<CreatePipelineCommandContext>, CreatePipelineCommand>();
             services.AddScoped<ICommand<DeletePipelineCommandContext>, DeletePipelineCommand>();
             services.AddScoped<ICommand<RunPipelineCommandContext>, RunPipelineCommand>();
+            services.AddScoped<IEventHandler<PipelineCompletedEvent>, PipelineCompletedNotificationEventHandler>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -121,6 +128,7 @@ namespace PipelinesApp.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<NotificationsHub>("/api/notifications");
             });
 
             app.UseSwagger();

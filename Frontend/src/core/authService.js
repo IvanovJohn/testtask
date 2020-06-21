@@ -11,8 +11,9 @@ export default {
                 axios.setAuthHeader(token)
                 this.currentUser = user
                 this.currentUser.token = token
-                router.reloadCurrentPage();                                
+                router.reloadCurrentPage();                    
             });
+           
         } else {
             axios.setAuthHeader(null)
             this.currentUser = null;            

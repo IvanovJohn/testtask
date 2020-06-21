@@ -1,7 +1,7 @@
 import axios from 'axios';
 import config from '../config';
 
-let vueRef=null;
+var vueRef = null;
 
 function errorResponseHandler(error) {
     if (error.response) {  

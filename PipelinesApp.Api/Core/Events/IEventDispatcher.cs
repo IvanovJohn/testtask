@@ -17,9 +17,10 @@
         private readonly IServiceProvider serviceProvider;
         private readonly IBackgroundTaskQueue backgroundTaskQueue;
 
-        public EventDispatcher(IServiceProvider serviceProvider, IBackgroundTaskQueue backgroundTaskQueue)
+        public EventDispatcher(IServiceScopeFactory serviceProviderFactory, IBackgroundTaskQueue backgroundTaskQueue)
         {
-            this.serviceProvider = serviceProvider;
+            var scope = serviceProviderFactory.CreateScope();
+            this.serviceProvider = scope.ServiceProvider;
             this.backgroundTaskQueue = backgroundTaskQueue;
         }
 

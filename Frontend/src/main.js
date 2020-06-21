@@ -12,9 +12,12 @@ Vue.use(IconsPlugin)
 
 import router from './router'
 import axiosWrapper from './core/axiosWrapper'
+import notificationsHub from './core/notificationsHub'
 
 var vueInstance=new Vue({
   router,
   render: h => h(App)
 }).$mount('#app')
+
 axiosWrapper.init(vueInstance);
+notificationsHub.init(vueInstance);
