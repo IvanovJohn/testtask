@@ -36,17 +36,20 @@
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                var workItem =
-                    await this.TaskQueue.DequeueAsync(stoppingToken);
+                var workItem = await this.TaskQueue.DequeueAsync(stoppingToken);
 
-                try
-                {
-                    await workItem(stoppingToken);
-                }
-                catch (Exception ex)
-                {
-                    this.logger.LogError(ex, "Error occurred executing {WorkItem}.", nameof(workItem));
-                }
+                Task.Run(
+                    async () =>
+                        {
+                            try
+                            {
+                                await workItem(stoppingToken);
+                            }
+                            catch (Exception ex)
+                            {
+                                this.logger.LogError(ex, "Error occurred executing {WorkItem}.", nameof(workItem));
+                            }
+                        });
             }
         }
     }
