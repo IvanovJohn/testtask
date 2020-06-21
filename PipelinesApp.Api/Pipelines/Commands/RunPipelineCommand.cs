@@ -18,6 +18,7 @@
     using PipelinesApp.Api.Pipelines.Queries;
     using PipelinesApp.Api.Pipelines.ViewModels;
     using PipelinesApp.Api.Settings;
+    using PipelinesApp.Api.Tasks.Events;
 
     internal class RunPipelineCommand : AbstractPipelineCommand<RunPipelineCommandContext>
     {
@@ -98,6 +99,7 @@
             await ProcessHelper.RunProcessAsync(processStartInfo);
 
             stopWatch.Stop();
+            this.eventDispatcher.PublishEvent(new TaskCompletedEvent { TaskId = task.Task.Id, Duration = stopWatch.ElapsedMilliseconds });
             this.logger.LogInformation($"Task {task.Task.Name} completed in {stopWatch.ElapsedMilliseconds} ms");
         }
     }

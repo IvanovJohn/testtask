@@ -318,6 +318,11 @@
             Gets or sets user, who creates this task.
             </summary>
         </member>
+        <member name="P:PipelinesApp.Api.Tasks.TaskDbEntity.RunCount">
+            <summary>
+            Gets or sets the ​run count of this task.
+            </summary>
+        </member>
         <member name="M:PipelinesApp.Api.Tasks.TasksController.#ctor(PipelinesApp.Api.Core.Queries.IQueryDispatcher,PipelinesApp.Api.Core.Commands.ICommandDispatcher)">
             <summary>
             Initializes a new instance of the <see cref="T:PipelinesApp.Api.Tasks.TasksController"/> class.

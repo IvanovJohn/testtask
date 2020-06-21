@@ -26,6 +26,7 @@ namespace PipelinesApp.Api
     using PipelinesApp.Api.Settings;
     using PipelinesApp.Api.Tasks;
     using PipelinesApp.Api.Tasks.Commands;
+    using PipelinesApp.Api.Tasks.Events;
     using PipelinesApp.Api.Tasks.Queries;
     using PipelinesApp.Api.Tasks.ViewModels;
     using PipelinesApp.Api.Users;
@@ -105,6 +106,8 @@ namespace PipelinesApp.Api
             services.AddScoped<IQuery<TaskByIdCriterion, TaskViewModel>, TaskByIdQuery>();
             services.AddScoped<ICommand<CreateTaskCommandContext>, CreateTaskCommand>();
             services.AddScoped<ICommand<DeleteTaskCommandContext>, DeleteTaskCommand>();
+            services.AddScoped<ICommand<UpdateTaskAverageTimeCommandContext>, UpdateTaskAverageTimeCommand>();
+            services.AddScoped<IEventHandler<TaskCompletedEvent>, RecalcAverageTimeTaskCompletedEventHandler>();
 
             services.AddScoped<IQuery<UsersCriterion, IEnumerable<UserViewModel>>, UsersQuery>();
             services.AddScoped<IQuery<UserByNameCriterion, UserDbEntity>, UserByNameQuery>();

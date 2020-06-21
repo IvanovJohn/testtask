@@ -26,5 +26,11 @@
         /// </summary>
         [BsonElement("creatorUserId")]
         public string CreatorUserId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ​run count of this task.
+        /// </summary>
+        [BsonElement("runCount")]
+        public long? RunCount { get; set; }
     }
 }

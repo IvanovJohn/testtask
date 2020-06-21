@@ -12,10 +12,12 @@
     {
         public AbstractTaskCommand(IMongoDbSettings mongoDbSettings)
         {
-            var client = new MongoClient(mongoDbSettings.ConnectionString);
-            var database = client.GetDatabase(mongoDbSettings.DatabaseName);
+            this.Client = new MongoClient(mongoDbSettings.ConnectionString);
+            var database = this.Client.GetDatabase(mongoDbSettings.DatabaseName);
             this.TasksCollection = database.GetCollection<TaskDbEntity>(mongoDbSettings.TasksCollectionName);
         }
+
+        protected MongoClient Client { get; private set; }
 
         protected IMongoCollection<TaskDbEntity> TasksCollection { get;  }
 
