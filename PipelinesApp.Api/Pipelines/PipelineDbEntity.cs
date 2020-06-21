@@ -22,8 +22,8 @@
         public string CreatorUserId { get; set; }
 
         /// <summary>
-        /// Gets or sets array of Tasks ids to run.
+        /// Gets or sets array of Tasks.
         /// </summary>
-        public string[] TasksId { get; set; }
+        public TaskGraphNode[] Tasks { get; set; }
     }
 }

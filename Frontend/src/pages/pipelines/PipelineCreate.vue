@@ -36,8 +36,8 @@
                     label="Tasks:"                    
                     >
                     <ul>
-                        <li v-for="item in form.Tasks" :key="item.id">
-                            {{ item.name }}                             
+                        <li v-for="item in form.Tasks" :key="item.taskId">
+                            {{ item.task.name }}                             
                             <b-button size="sm" variant="outline" class="m-0 p-0" @click="removeTask(item)">
                                 <b-icon icon="x" aria-hidden="true" ></b-icon>
                             </b-button>    
@@ -114,8 +114,19 @@
             handleShow() {
                 this.resetModal();
             },
-            taskSelected(task){                
-                this.form.Tasks.push(task)
+            taskSelected(task){  
+                if(this.form.Tasks.length==0){            
+                    this.form.Tasks.push({
+                        taskId: task.id,
+                        task: task
+                    })
+                }else{
+                    this.form.Tasks.push({
+                        taskId: task.id,
+                        previosTaskId: this.form.Tasks[this.form.Tasks.length -1].taskId,
+                        task: task
+                    })
+                }
             },
             removeTask(task){
                 const index = this.form.Tasks.indexOf(task);

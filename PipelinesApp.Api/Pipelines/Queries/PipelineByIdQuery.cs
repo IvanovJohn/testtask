@@ -1,6 +1,7 @@
 ﻿namespace PipelinesApp.Api.Pipelines.Queries
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using MongoDB.Driver;
@@ -30,13 +31,25 @@
                 throw ApiException.ErrorItemNotFound("Pipeline not found");
             }
 
+            var childTasksIds = pipeline.Tasks.Select(p => p.TaskId).ToArray();
             var pipelineTasks =
-                await this.queryDispatcher.Ask<TaskByIdsCriterion, IEnumerable<TaskViewModel>>(
-                    new TaskByIdsCriterion { Ids = pipeline.TasksId });
+                (await this.queryDispatcher.Ask<TaskByIdsCriterion, IEnumerable<TaskViewModel>>(
+                    new TaskByIdsCriterion { Ids = childTasksIds })).ToList();
             var result = new PipelineDetailsViewModel();
             result.Fill(pipeline);
-            result.Tasks = pipelineTasks;
 
+            var tasksViewModel = new List<TaskGraphNodeViewModel>();
+            foreach (var taskGraphNode in pipeline.Tasks)
+            {
+                tasksViewModel.Add(
+                    new TaskGraphNodeViewModel
+                        {
+                            PreviosTaskId = taskGraphNode.PreviosTaskId,
+                            Task = pipelineTasks.First(p => p.Id == taskGraphNode.TaskId),
+                        });
+            }
+
+            result.Tasks = tasksViewModel;
             return result;
         }
     }

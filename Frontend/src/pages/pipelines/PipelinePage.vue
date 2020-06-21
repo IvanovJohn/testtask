@@ -11,8 +11,8 @@
             <dt class="col-sm-3">Tasks</dt>
             <dd class="col-sm-9">
                 <ul>
-                    <li v-for="item in form.tasks" :key="item.id">
-                        {{ item.name }}
+                    <li v-for="item in form.tasks" :key="item.task.id">
+                        {{ item.task.name }}
                     </li>
                 </ul>
             </dd>   

@@ -267,9 +267,9 @@
             Gets or sets user, who creates this task.
             </summary>
         </member>
-        <member name="P:PipelinesApp.Api.Pipelines.PipelineDbEntity.TasksId">
+        <member name="P:PipelinesApp.Api.Pipelines.PipelineDbEntity.Tasks">
             <summary>
-            Gets or sets array of Tasks ids to run.
+            Gets or sets array of Tasks.
             </summary>
         </member>
         <member name="M:PipelinesApp.Api.Pipelines.PipelinesController.#ctor(PipelinesApp.Api.Core.Queries.IQueryDispatcher,PipelinesApp.Api.Core.Commands.ICommandDispatcher)">

@@ -1,6 +1,5 @@
 ﻿namespace PipelinesApp.Api.Pipelines.Commands
 {
-    using System.Linq;
     using System.Threading.Tasks;
 
     using PipelinesApp.Api.Auth;
@@ -26,7 +25,7 @@
                     {
                         Name = commandContext.Form.Name,
                         CreatorUserId = commandContext.CurrentUser.GetUserIdFromClaims(),
-                        TasksId = commandContext.Form.Tasks?.Select(p => p.Id).ToArray(),
+                        Tasks = commandContext.Form.Tasks,
                     });
         }
     }
