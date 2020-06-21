@@ -19,6 +19,7 @@ namespace PipelinesApp.Api
     using PipelinesApp.Api.Pipelines.Commands;
     using PipelinesApp.Api.Pipelines.Queries;
     using PipelinesApp.Api.Pipelines.ViewModels;
+    using PipelinesApp.Api.Runner;
     using PipelinesApp.Api.Settings;
     using PipelinesApp.Api.Tasks;
     using PipelinesApp.Api.Tasks.Commands;
@@ -86,6 +87,9 @@ namespace PipelinesApp.Api
 
             services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
             services.AddSingleton<IAuthorizationHandler, TaskAuthorizationHandler>();
+            services.AddSingleton<IPipelineRunner, PipelineRunner>();
+            services.AddHostedService<QueuedHostedService>();
+            services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
 
             // TODO: register by convention
             services.AddScoped<IQuery<TasksCriterion, IEnumerable<TaskViewModel>>, TasksQuery>();
@@ -105,8 +109,6 @@ namespace PipelinesApp.Api
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseHsts();
-
             app.UseCors("AllowAll");
             app.UseRouting();
 
