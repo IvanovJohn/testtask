@@ -13,5 +13,8 @@ export default {
     },
     delete(id){
         return axios.getInstance().delete(`${resource}/${id}`);
+    },
+    run(id){
+        return axios.getInstance().post(`${resource}/${id}/run`);
     }
 }

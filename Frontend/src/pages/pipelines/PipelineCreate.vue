@@ -54,7 +54,7 @@
   import { validationMixin } from "vuelidate";
   import { required, minLength } from "vuelidate/lib/validators";
   import authService from '@/core/authService';
-  import pipelinesRepository from './pipelinesRepository';  
+  import pipelinesApi from './pipelinesApi';  
   import serverValidationMixin from '@/mixins/serverValidation'
   import TaskSelector from '@/pages/tasks/TaskSelector'
 
@@ -94,7 +94,7 @@
                     return;
                 }
         
-                pipelinesRepository.add(this.form).then(() => {
+                pipelinesApi.add(this.form).then(() => {
                     // Hide the modal manually
                     this.$nextTick(() => {                    
                         this.$bvModal.hide('modalPipelineCreation');

@@ -38,7 +38,7 @@
 </template>
 
 <script>
-  import pipelinesRepository from './pipelinesRepository';
+  import pipelinesApi from './pipelinesApi';
   import authService from '@/core/authService';
 
   export default {
@@ -67,7 +67,7 @@
     },
     methods: {
       itemsProvider () {
-        let promise = pipelinesRepository.list();
+        let promise = pipelinesApi.list();
         return promise.then((data) => {
           const items = data.data;
           return(items);
@@ -80,7 +80,7 @@
           this.$bvModal.msgBoxConfirm('Are you sure?')
             .then((value) => {
               if(value){
-                pipelinesRepository.delete(pipeline.id).then(() => {
+                pipelinesApi.delete(pipeline.id).then(() => {
                   this.refresh();
                   this.$bvToast.toast(`Pipeline '${pipeline.name}' deleted`, {
                                     title: 'Info',           

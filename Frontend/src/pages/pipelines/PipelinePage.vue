@@ -23,7 +23,7 @@
     </div>
      <div class="row">
       <div class="col">
-          <button type="button" class="btn btn-primary mx-2">Run pipeline</button>
+          <button type="button" class="btn btn-primary mx-2" @click="runPipeline">Run pipeline</button>
           <button type="button" class="btn btn-secondary">Recalculate forecast time</button>
       </div>
      </div>
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import pipelinesRepository from './pipelinesRepository';
+import pipelinesApi from './pipelinesApi';
 export default {
   name: 'Pipeline',
   data () {
@@ -39,9 +39,14 @@ export default {
           form:{}
       }
   },
+  methods: {
+      runPipeline(){
+          pipelinesApi.run(this.form.id)
+      }
+  },
   mounted() {
-    pipelinesRepository.getById(this.$route.params.id)
+    pipelinesApi.getById(this.$route.params.id)
       .then(response => (this.form = response.data));
-  }    
+  }  
 }
 </script>
