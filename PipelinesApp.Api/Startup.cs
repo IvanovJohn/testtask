@@ -13,6 +13,7 @@ namespace PipelinesApp.Api
     using Microsoft.OpenApi.Models;
 
     using PipelinesApp.Api.Auth;
+    using PipelinesApp.Api.BackgroundTasks;
     using PipelinesApp.Api.Core.Commands;
     using PipelinesApp.Api.Core.Events;
     using PipelinesApp.Api.Core.Queries;
@@ -20,7 +21,6 @@ namespace PipelinesApp.Api
     using PipelinesApp.Api.Pipelines.Commands;
     using PipelinesApp.Api.Pipelines.Queries;
     using PipelinesApp.Api.Pipelines.ViewModels;
-    using PipelinesApp.Api.Runner;
     using PipelinesApp.Api.Settings;
     using PipelinesApp.Api.Tasks;
     using PipelinesApp.Api.Tasks.Commands;
@@ -89,7 +89,7 @@ namespace PipelinesApp.Api
 
             services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
             services.AddSingleton<IAuthorizationHandler, TaskAuthorizationHandler>();
-            services.AddSingleton<IPipelineRunner, PipelineRunner>();
+
             services.AddHostedService<QueuedHostedService>();
             services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
 
@@ -107,6 +107,7 @@ namespace PipelinesApp.Api
             services.AddScoped<IQuery<PipelineByIdCriterion, PipelineDetailsViewModel>, PipelineByIdQuery>();
             services.AddScoped<ICommand<CreatePipelineCommandContext>, CreatePipelineCommand>();
             services.AddScoped<ICommand<DeletePipelineCommandContext>, DeletePipelineCommand>();
+            services.AddScoped<ICommand<RunPipelineCommandContext>, RunPipelineCommand>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

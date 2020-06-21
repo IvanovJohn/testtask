@@ -272,7 +272,7 @@
             Gets or sets array of Tasks.
             </summary>
         </member>
-        <member name="M:PipelinesApp.Api.Pipelines.PipelinesController.#ctor(PipelinesApp.Api.Core.Queries.IQueryDispatcher,PipelinesApp.Api.Core.Commands.ICommandDispatcher,PipelinesApp.Api.Runner.IPipelineRunner)">
+        <member name="M:PipelinesApp.Api.Pipelines.PipelinesController.#ctor(PipelinesApp.Api.Core.Queries.IQueryDispatcher,PipelinesApp.Api.Core.Commands.ICommandDispatcher)">
             <summary>
             Initializes a new instance of the <see cref="T:PipelinesApp.Api.Pipelines.PipelinesController"/> class.
             </summary>
@@ -281,9 +281,6 @@
             </param>
             <param name="commandDispatcher">
             <see cref="T:PipelinesApp.Api.Core.Commands.ICommandDispatcher"/>.
-            </param>
-            <param name="pipelineRunner">
-            The pipeline Runner.
             </param>
         </member>
         <member name="T:PipelinesApp.Api.Pipelines.ViewModels.PipelineViewModel">

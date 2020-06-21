@@ -4,7 +4,7 @@
 
     using Microsoft.Extensions.DependencyInjection;
 
-    using PipelinesApp.Api.Runner;
+    using PipelinesApp.Api.BackgroundTasks;
 
     public interface IEventDispatcher
     {

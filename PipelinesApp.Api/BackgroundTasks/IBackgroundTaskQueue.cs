@@ -1,4 +1,4 @@
-﻿namespace PipelinesApp.Api.Runner
+﻿namespace PipelinesApp.Api.BackgroundTasks
 {
     using System;
     using System.Collections.Concurrent;

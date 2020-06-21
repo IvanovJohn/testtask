@@ -1,43 +1,50 @@
-﻿namespace PipelinesApp.Api.Runner
+﻿namespace PipelinesApp.Api.Pipelines.Commands
 {
+    using System;
     using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using System.Reflection;
-    using System.Runtime.InteropServices;
     using System.Threading;
     using System.Threading.Tasks;
 
-    using Microsoft.CodeAnalysis.CSharp.Syntax;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
 
+    using PipelinesApp.Api.BackgroundTasks;
+    using PipelinesApp.Api.Core.Queries;
     using PipelinesApp.Api.Helpers;
+    using PipelinesApp.Api.Pipelines.Queries;
     using PipelinesApp.Api.Pipelines.ViewModels;
+    using PipelinesApp.Api.Settings;
 
-    public interface IPipelineRunner
+    internal class RunPipelineCommand : AbstractPipelineCommand<RunPipelineCommandContext>
     {
-        public Task RunInBackground(PipelineDetailsViewModel pipeline);
-    }
-
-    internal class PipelineRunner : IPipelineRunner
-    {
+        private readonly IQueryDispatcher queryDispatcher;
         private readonly IBackgroundTaskQueue backgroundTaskQueue;
-        private readonly CancellationToken cancellationToken;
-        private readonly ILogger<PipelineRunner> logger;
+        private readonly ILogger<RunPipelineCommand> logger;
+        private readonly CancellationToken appCancellationToken;
 
-        public PipelineRunner(IBackgroundTaskQueue backgroundTaskQueue, IHostApplicationLifetime applicationLifetime, ILogger<PipelineRunner> logger)
+        public RunPipelineCommand(
+            IMongoDbSettings mongoDbSettings,
+            IQueryDispatcher queryDispatcher,
+            IBackgroundTaskQueue backgroundTaskQueue,
+            ILogger<RunPipelineCommand> logger,
+            IHostApplicationLifetime applicationLifetime)
+            : base(mongoDbSettings)
         {
+            this.queryDispatcher = queryDispatcher;
             this.backgroundTaskQueue = backgroundTaskQueue;
             this.logger = logger;
-            this.cancellationToken = applicationLifetime.ApplicationStopping;
+            this.appCancellationToken = applicationLifetime.ApplicationStopping;
         }
 
-        public async Task RunInBackground(PipelineDetailsViewModel pipeline)
+        public override async Task Execute(RunPipelineCommandContext commandContext)
         {
+            var pipeline = await this.queryDispatcher.Ask<PipelineByIdCriterion, PipelineDetailsViewModel>(new PipelineByIdCriterion { Id = commandContext.Id });
             this.backgroundTaskQueue.QueueBackgroundWorkItem(async token =>
                 {
-                    await this.Run(pipeline, this.cancellationToken);
+                    await this.Run(pipeline, this.appCancellationToken);
                 });
         }
 
@@ -66,8 +73,9 @@
 
         private async Task RunTask(TaskGraphNodeViewModel task, CancellationToken token)
         {
+            var stopWatch = new Stopwatch();
+            stopWatch.Start();
             this.logger.LogInformation($"Task {task.Task.Name} started");
-            this.logger.LogInformation(Directory.GetCurrentDirectory());
 
             var processStartInfo = new ProcessStartInfo();
             var currentDir =
@@ -75,17 +83,17 @@
 
             processStartInfo.FileName = Path.Combine(currentDir, "PipelineApp.TaskExample");
 
-            // when we run it form vs, file has extension
+            // when we run it from vs (and build in win), file has extension
             if (!File.Exists(processStartInfo.FileName))
             {
                 processStartInfo.FileName = Path.Combine(currentDir, "PipelineApp.TaskExample.exe");
                 processStartInfo.WorkingDirectory = currentDir;
             }
 
-            this.logger.LogInformation(processStartInfo.FileName);
             await ProcessHelper.RunProcessAsync(processStartInfo);
 
-            this.logger.LogInformation($"Task {task.Task.Name} completed");
+            stopWatch.Stop();
+            this.logger.LogInformation($"Task {task.Task.Name} completed in {stopWatch.ElapsedMilliseconds} ms");
         }
     }
 }

@@ -28,7 +28,7 @@
 
         public override async Task Execute(DeletePipelineCommandContext commandContext)
         {
-            var pipeline = await this.queryDispatcher.Ask<PipelineByIdCriterion, PipelineViewModel>(new PipelineByIdCriterion { Id = commandContext.Id });
+            var pipeline = await this.queryDispatcher.Ask<PipelineByIdCriterion, PipelineDetailsViewModel>(new PipelineByIdCriterion { Id = commandContext.Id });
             var authResult = await this.authorizationService.AuthorizeAsync(commandContext.CurrentUser, pipeline, new NameAuthorizationRequirement(PipelineActions.Delete));
             if (!authResult.Succeeded)
             {

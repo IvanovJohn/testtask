@@ -12,7 +12,6 @@
     using PipelinesApp.Api.Pipelines.Forms;
     using PipelinesApp.Api.Pipelines.Queries;
     using PipelinesApp.Api.Pipelines.ViewModels;
-    using PipelinesApp.Api.Runner;
 
     [Route("api/pipelines")]
     [ApiController]
@@ -20,7 +19,6 @@
     {
         private readonly IQueryDispatcher queryDispatcher;
         private readonly ICommandDispatcher commandDispatcher;
-        private readonly IPipelineRunner pipelineRunner;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PipelinesController"/> class.
@@ -31,14 +29,10 @@
         /// <param name="commandDispatcher">
         /// <see cref="ICommandDispatcher"/>.
         /// </param>
-        /// <param name="pipelineRunner">
-        /// The pipeline Runner.
-        /// </param>
-        public PipelinesController(IQueryDispatcher queryDispatcher, ICommandDispatcher commandDispatcher, IPipelineRunner pipelineRunner)
+        public PipelinesController(IQueryDispatcher queryDispatcher, ICommandDispatcher commandDispatcher)
         {
             this.queryDispatcher = queryDispatcher;
             this.commandDispatcher = commandDispatcher;
-            this.pipelineRunner = pipelineRunner;
         }
 
         [HttpGet]
@@ -84,10 +78,10 @@
         [Route("{id}/run")]
         public async Task RunPipeline(string id)
         {
-            var pipeline = await this.queryDispatcher.Ask<PipelineByIdCriterion, PipelineDetailsViewModel>(
-                               new PipelineByIdCriterion { Id = id });
-
-            await this.pipelineRunner.RunInBackground(pipeline);
+            await this.commandDispatcher.Execute(new RunPipelineCommandContext
+                                                     {
+                                                         Id = id,
+                                                     });
         }
     }
 }
