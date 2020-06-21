@@ -17,9 +17,10 @@ namespace PipelinesApp.Api
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder
-                        .UseKestrel(options => {
-                                options.Listen(IPAddress.Loopback, 80);
-                            }).UseStartup<Startup>();
+                        ////.UseKestrel(options => {
+                        ////        options.Listen(IPAddress.Loopback, 80);
+                        ////    })
+                        .UseStartup<Startup>();
                 });
     }
 }

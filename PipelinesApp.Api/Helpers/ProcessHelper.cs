@@ -5,13 +5,13 @@
 
     internal class ProcessHelper
     {
-        public static Task<int> RunProcessAsync(string fileName)
+        public static Task<int> RunProcessAsync(ProcessStartInfo processStartInfo)
         {
             var tcs = new TaskCompletionSource<int>();
 
             var process = new Process
                               {
-                                  StartInfo = { FileName = fileName },
+                                  StartInfo = processStartInfo,
                                   EnableRaisingEvents = true,
                               };
 

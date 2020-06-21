@@ -1,10 +1,14 @@
 ﻿namespace PipelinesApp.Api.Runner
 {
+    using System.Diagnostics;
     using System.IO;
     using System.Linq;
+    using System.Reflection;
+    using System.Runtime.InteropServices;
     using System.Threading;
     using System.Threading.Tasks;
 
+    using Microsoft.CodeAnalysis.CSharp.Syntax;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
 
@@ -64,12 +68,23 @@
         {
             this.logger.LogInformation($"Task {task.Task.Name} started");
             this.logger.LogInformation(Directory.GetCurrentDirectory());
-#if DEBUG
-            await ProcessHelper.RunProcessAsync("./bin/Debug/netcoreapp3.1/PipelineApp.TaskExample.exe");
-#endif
-#if !DEBUG
-            await ProcessHelper.RunProcessAsync("PipelineApp.TaskExample.exe");
-#endif
+
+            var processStartInfo = new ProcessStartInfo();
+            var currentDir =
+                Path.GetDirectoryName(new System.Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath);
+
+            processStartInfo.FileName = Path.Combine(currentDir, "PipelineApp.TaskExample");
+
+            // when we run it form vs, file has extension
+            if (!File.Exists(processStartInfo.FileName))
+            {
+                processStartInfo.FileName = Path.Combine(currentDir, "PipelineApp.TaskExample.exe");
+                processStartInfo.WorkingDirectory = currentDir;
+            }
+
+            this.logger.LogInformation(processStartInfo.FileName);
+            await ProcessHelper.RunProcessAsync(processStartInfo);
+
             this.logger.LogInformation($"Task {task.Task.Name} completed");
         }
     }
