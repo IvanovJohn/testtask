@@ -14,6 +14,7 @@ namespace PipelinesApp.Api
 
     using PipelinesApp.Api.Auth;
     using PipelinesApp.Api.Core.Commands;
+    using PipelinesApp.Api.Core.Events;
     using PipelinesApp.Api.Core.Queries;
     using PipelinesApp.Api.ExceptionHandling;
     using PipelinesApp.Api.Pipelines.Commands;
@@ -66,6 +67,7 @@ namespace PipelinesApp.Api
 
             services.AddScoped<IQueryDispatcher, QueryDispatcher>();
             services.AddScoped<ICommandDispatcher, CommandDispatcher>();
+            services.AddScoped<IEventDispatcher, EventDispatcher>();
 
             services.AddAuthentication(x =>
                     {
